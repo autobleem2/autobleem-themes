@@ -20,12 +20,16 @@ jobs:
   build:
     if: vars.AB_CI_ENABLED == 'true'
     runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v7
       - name: Version
+        id: version
         run: |
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then echo "AB_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
           else echo "AB_VERSION=0.0.0-$(date -u +%Y%m%d)-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"; fi
+          grep '^AB_VERSION=' "$GITHUB_ENV" | tail -1 | sed 's/^AB_VERSION=/version=/' >> "$GITHUB_OUTPUT"
       - name: Package
         run: tools/make_themes_package.sh
       - name: Verify the archive matches Themes/ (name for name, byte for byte)
@@ -65,3 +69,4 @@ jobs:
       - uses: autobleem2/autobleem-build/.github/actions/nightly-release@develop
         with:
           files: out/*.tar.gz
+          version: ${{ needs.build.outputs.version }}
