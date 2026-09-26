@@ -1,4 +1,4 @@
-AutoBleem - a game launcher / front-end for the PlayStation Classic, Raspberry Pi and PC
+AutoBleem - a game launcher for the PlayStation Classic, Raspberry Pi and PC
 Copyright (C) 2018-2026 screemer and the AutoBleem contributors
 
 This program is free software: you can redistribute it and/or modify it under
@@ -11,8 +11,11 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE. See the GNU General Public License below for more details.
 
 The name "AutoBleem", its logo and the artwork of the shipped themes are not
-covered by this licence. Bundled third-party components keep their own licences
-(see the licence files under their directories).
+covered by this licence - see TRADEMARKS.md (section 7(e) of the licence lets
+us decline that grant). Third-party components and their licences are listed
+in THIRD_PARTY_NOTICES.md.
+
+=======================================================================
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

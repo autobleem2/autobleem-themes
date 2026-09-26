@@ -1,0 +1,72 @@
+# autobleem-themes CI: package Themes/ as themes-<version>.tar.gz (tools/make_themes_package.sh) and
+# verify the archive holds exactly what Themes/ holds. A v* tag publishes it as a release; develop keeps
+# the rolling `nightly` pre-release current, the way every other autobleem2 component does. No build
+# image is needed - there is nothing to compile. Gated by AB_CI_ENABLED, like every autobleem2 repository.
+name: build
+on:
+  push:
+    branches: [develop, master]
+    tags: ['v*']
+  pull_request:
+    branches: [develop, master]
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    if: vars.AB_CI_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Version
+        id: version
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then echo "AB_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+          else echo "AB_VERSION=0.0.0-$(date -u +%Y%m%d)-$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"; fi
+          grep '^AB_VERSION=' "$GITHUB_ENV" | tail -1 | sed 's/^AB_VERSION=/version=/' >> "$GITHUB_OUTPUT"
+      - name: Package
+        run: tools/make_themes_package.sh
+      - name: Verify the archive matches Themes/ (name for name, byte for byte)
+        run: |
+          mkdir -p /tmp/check
+          tar -xzf dist/themes-*.tar.gz -C /tmp/check
+          diff -rq Themes /tmp/check/Themes
+      - uses: actions/upload-artifact@v7
+        with:
+          name: themes-package
+          path: dist/*.tar.gz
+          retention-days: 30
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions: { contents: write }
+    steps:
+      - uses: actions/download-artifact@v8
+        with: { name: themes-package, path: out }
+      - name: Attach to the release
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          gh release create "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" \
+            --title "Themes ${GITHUB_REF_NAME}" --generate-notes out/*.tar.gz || \
+          gh release upload "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" out/*.tar.gz --clobber
+
+  nightly:
+    if: github.ref == 'refs/heads/develop' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions: { contents: write }
+    steps:
+      - uses: actions/download-artifact@v8
+        with: { name: themes-package, path: out }
+      - uses: autobleem2/autobleem-build/.github/actions/nightly-release@develop
+        with:
+          files: out/*.tar.gz
+          version: ${{ needs.build.outputs.version }}
