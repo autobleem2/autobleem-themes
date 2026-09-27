@@ -45,10 +45,11 @@ compile.
 
 ## Consumers
 
-The launcher and autobleem-appliance take a themes release the way they take any other component's (a
-tag or `nightly`, staged into the package being assembled) - see autobleem-main's `docs/todo.md` D5 for
-where that stands. Until that lands, the launcher's own `payload/Themes/` is still what ships; this
-repository is the themes' source of truth and the launcher's copy should be treated as downstream of it.
+The launcher no longer ships its own `payload/Themes/`: since D5 step 2 (2026-09-26) it takes this
+repository as a git submodule for its own builds and dev/test packages, and its per-component release
+artifact and autobleem-appliance's assembly step take a themes release from here directly (`stage_themes`,
+a tag or `nightly`) instead of going through the launcher's package - see autobleem-main's `docs/todo.md`
+D5 for where that stands. This repository is the themes' source of truth.
 
 ## Licence
 
