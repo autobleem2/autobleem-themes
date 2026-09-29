@@ -1,6 +1,7 @@
 """Direction A (CONSOLE-14): logo B4 in the v02b style - the "2" capsule with cut corners.
 
-C1 = B4 with the chamfered capsule, cyan rim; C2 = the same with a magenta rim. The bar under the wordmark
+C1 = B4 with the chamfered capsule, cyan rim; C2 = the same with a magenta rim; C3 = C2 with its own underline
+under the 2 (the owner, 2026-09-29), also drawn in cyan for comparison. The bar under the wordmark
 gets a cut end too. Writes design/direction-a/logo/logo-c1/c2.png (+@2x) and logo-b4-vs-c.png: B4, C1, C2
 on the background, and each at the launcher's corner on the v02b mockup.
 Run: python tools/make_direction_a_logo3.py --font-dir ../../../repos/autobleem/src/resources/fonts
@@ -23,7 +24,7 @@ def chamfer(d, box, c, fill):
     d.polygon([(x0, y0), (x1 - c, y0), (x1, y0 + c), (x1, y1), (x0 + c, y1), (x0, y1 - c)], fill=fill)
 
 
-def c_logo(scale, rim_rgb):
+def c_logo(scale, rim_rgb, underline_two=False):
     k = scale * SS
     im = canvas(k)
     auto = text_img("AUTO", OS_MED, 54, k, STEEL, tracking=2)
@@ -59,12 +60,24 @@ def c_logo(scale, rim_rgb):
         top = y0 + max(0, (bx0 + 5 * k) - x)  # the cut at the left end
         gd.line([(x, top), (x, y1)], fill=CYAN + (round(255 * (1 - t) ** 1.4),))
     im.alpha_composite(glow(bar, 5 * k, CYAN, 0.8))
+    if underline_two:
+        # C3: the 2 gets its own underline in the capsule's colour, on the bar's line, cut like the shapes
+        ul = canvas(k)
+        ud = ImageDraw.Draw(ul)
+        ux0, ux1 = px0, px0 + pill_w
+        cut = 5 * k
+        ud.polygon([(ux0, y1), (ux0 + cut, y0), (ux1, y0), (ux1 - cut, y1)], fill=rim_rgb + (255,))
+        im.alpha_composite(glow(ul, 5 * k, rim_rgb, 0.9))
     return finish(im, scale)
 
 
 def main():
     out = base.OUT
     c1, c2 = c_logo(1, CYAN), c_logo(1, MAGENTA)
+    c3, c3c = c_logo(1, MAGENTA, True), c_logo(1, CYAN, True)
+    c3.save(os.path.join(out, "logo-c3.png"))
+    c3c.save(os.path.join(out, "logo-c3-cyan.png"))
+    c_logo(2, MAGENTA, True).save(os.path.join(out, "logo-c3@2x.png"))
     c1.save(os.path.join(out, "logo-c1.png"))
     c2.save(os.path.join(out, "logo-c2.png"))
     c_logo(2, CYAN).save(os.path.join(out, "logo-c1@2x.png"))
@@ -73,10 +86,10 @@ def main():
     # row 1: the three at 1x on the background; row 2: each in the v02b mockup's corner
     bg = Image.open(os.path.join(os.path.dirname(base.OUT), "bg-direction-a-01-smooth.png")).convert("RGBA").resize((1280, 720))
     mock = Image.open(os.path.join(os.path.dirname(base.OUT), "mockup", "launcher-games-direction-a-02b.png")).convert("RGBA")
-    sheet = Image.new("RGBA", (1440, 300 + 330), (0, 0, 0, 255))
-    names = ("B4 (dzis)", "C1 sciete, cyjan", "C2 sciete, magenta")
+    sheet = Image.new("RGBA", (1920, 300 + 330), (0, 0, 0, 255))
+    names = ("C1 sciete, cyjan", "C2 sciete, magenta", "C3 magenta + podkreslona 2", "C3 cyjan + podkreslona 2")
     f = ImageFont.truetype(OS_BOLD, 18)
-    for i, (lg, nm) in enumerate(zip((b4, c1, c2), names)):
+    for i, (lg, nm) in enumerate(zip((c1, c2, c3, c3c), names)):
         tile = bg.crop((400, 200, 880, 500))
         tile.alpha_composite(lg, (0, -30))
         sheet.alpha_composite(tile, (i * 480, 0))
@@ -89,7 +102,7 @@ def main():
         d = ImageDraw.Draw(sheet)
         d.text((i * 480 + 12, 10), nm, font=f, fill=(255, 255, 255, 230))
     ImageDraw.Draw(sheet).text((12, 480), "w rogu ekranu (fragment mockupu v02b)", font=f, fill=(200, 210, 220, 255))
-    sheet = sheet.crop((0, 0, 1440, 470))
+    sheet = sheet.crop((0, 0, 1920, 470))
     sheet.convert("RGB").save(os.path.join(out, "logo-b4-vs-c.png"))
     print("written:", out)
 
