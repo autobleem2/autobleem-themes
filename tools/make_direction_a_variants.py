@@ -244,9 +244,10 @@ LEFT = [("RETRO RALLY", (50, 70, 20), (170, 210, 60)), ("MOON BASE", (20, 20, 50
         ("LAVA LAND", (90, 30, 0), (250, 120, 30)), ("ICE PALACE", (20, 60, 80), (170, 230, 250))]
 
 
-def render(key, v, bold, med):
+def render(key, v, bold, med, bg=None, label=True):
     head = v["heading"] or bold
-    scr = Image.open(os.path.join(A, "bg-direction-a-01-smooth.png")).convert("RGBA").resize((1280, 720))
+    scr = (bg.convert("RGBA").resize((1280, 720)) if bg is not None else
+           Image.open(os.path.join(A, "bg-direction-a-01-smooth.png")).convert("RGBA").resize((1280, 720)))
     if v["shape"] == "round-small":  # minimal: calm the background down
         scr = Image.alpha_composite(scr, Image.new("RGBA", scr.size, (8, 11, 16, 170)))
     make = jewel_case if v["cases"] else flat_cover
@@ -358,7 +359,7 @@ def render(key, v, bold, med):
                        (hint("hint_triangle.png"), "Guide"), (keycap("L2+R2"), "System")])
 
     # the logo
-    logo = Image.open(os.path.join(A, "logo", "logo-b4.png")).convert("RGBA")
+    logo = Image.open(os.path.join(A, "logo", "logo-c3.png")).convert("RGBA")
     logo = logo.resize((int(logo.width * 0.72), int(logo.height * 0.72)), Image.LANCZOS)
     scr.alpha_composite(logo, (6, 720 - logo.height + 38))
 
@@ -382,7 +383,8 @@ def render(key, v, bold, med):
 
     # label
     d = ImageDraw.Draw(scr)
-    d.text((14, 12), f"v02{key}  {v['name']}", font=ImageFont.truetype(bold, 16), fill=(255, 255, 255, 200))
+    if label:
+        d.text((14, 12), f"v02{key}  {v['name']}", font=ImageFont.truetype(bold, 16), fill=(255, 255, 255, 200))
     return scr.convert("RGB")
 
 
