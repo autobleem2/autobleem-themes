@@ -8,6 +8,7 @@ own source repositories"). Five themes ship today: `ab2`, `aergb`, `autobleem`, 
 ```
 Themes/<name>/theme.json          the theme, in the format the launcher reads - see below
 Themes/<name>/...                 the files theme.json names: images, fonts, sounds, music, credits
+design/<direction>/               work-in-progress design sources for a new look (not packaged)
 ```
 
 Each theme is exactly what `<launcher>/payload/Themes/<name>/` used to hold. The **format** - what
