@@ -1,10 +1,10 @@
-# direction-a - AutoBleem 2's new look (CONSOLE-14), the trial theme
+# ab2.0.0 - AutoBleem 2's new look (CONSOLE-14), the trial theme
 
-`Themes/direction-a/` is a **first build** of the new look, on today's `theme.json` format: everything the
+`Themes/ab2.0.0/` is a **first build** of the new look, on today's `theme.json` format: everything the
 format can already carry. `src/` holds its sources: every script that draws the pictures (`src/tools/`), the
 mockups and design sources (`src/design/`), and this file - the decisions and the exact code changes the
-mockups need. "direction-a" is a working name; rename the folder (and `THEME` in
-`src/tools/make_direction_a_theme.py`) when the look gets its real one.
+mockups need. The theme's name is **ab2.0.0** (the owner, 2026-09-29); "Direction A" / "direction-a" in the
+scripts' and design files' names is the look's working name from the design rounds.
 
 ## Decisions (the owner, 2026-09-29)
 
@@ -118,11 +118,12 @@ Mockups: `design/mockup/launcher-games-direction-a-02b.png` (the launcher), `des
 
 ## How to rebuild
 
-From the repository root, with the launcher checkout and the downloaded fonts beside it (paths as on the
-Foundry machine; the fonts are the OFL files from Google Fonts / the authors' GitHub releases):
+From the repository root, given a launcher checkout (`--launcher`) and a folder of the downloaded fonts
+(`--fonts`: the OFL files from Google Fonts / the authors' GitHub releases; Red Hat Text is read from
+`<fonts>/other/RedHatText[wght].ttf` and `<fonts>/other/RedHat-OFL.txt`):
 
 ```
-python Themes/direction-a/src/tools/make_direction_a_theme.py --launcher ../../../repos/autobleem --fonts ../../../tmp/fonts
+python Themes/ab2.0.0/src/tools/make_direction_a_theme.py --launcher <launcher checkout> --fonts <fonts folder>
 ```
 
 The other scripts draw the design sheets (each says how to run it in its docstring):

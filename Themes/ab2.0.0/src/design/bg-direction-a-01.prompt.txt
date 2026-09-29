@@ -1,5 +1,5 @@
 Wide dark premium video game console dashboard background wallpaper, visible rich graphite grey and deep navy blue gradient surface filling the whole frame, soft diffuse studio lighting washing across brushed metal-like graphite texture with faint angular geometric panel lines and circuit-like traces, one soft cyan glow accent light positioned off-center, the exact horizontal middle third of the image kept smooth and calm with the least texture and lowest contrast detail, the bottom third of the image clearly darker and dimmer than the top for legible white UI text, no flat black voids, no text, no letters, no words, no logos, no brand marks, no controllers, no photographed hardware, 16:9 landscape, atmospheric abstract digital art, moody but not underexposed
 981205
 
-Source: FLUX.1-schnell (black-forest-labs-flux-1-schnell.hf.space, Gradio API /gradio_api/call/infer), Apache-2.0, generated 2026-09-29, 1280x720, steps=4, randomize_seed=false.
+Source: FLUX.1-schnell (the public Hugging Face Space, via its Gradio API), Apache-2.0, generated 2026-09-29, 1280x720, steps=4, randomize_seed=false.
 An earlier generation with seed 42137 came out too sparse and near-black and was dropped.

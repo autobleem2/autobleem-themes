@@ -15,7 +15,7 @@ import os
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".."))
-DESIGN = os.path.join(REPO, "Themes", "direction-a", "src", "design")
+DESIGN = os.path.join(REPO, "Themes", "ab2.0.0", "src", "design")
 OUT = os.path.join(DESIGN, "logo")
 _ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
 _ap.add_argument("--font-dir", default=os.environ.get("AB_FONT_DIR") or os.path.join(

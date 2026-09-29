@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import make_direction_a_icons as ic  # noqa: E402
 
 REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".."))
-A = os.path.join(REPO, "Themes", "direction-a", "src", "design")
+A = os.path.join(REPO, "Themes", "ab2.0.0", "src", "design")
 DEF = os.path.join(REPO, "Themes", "default")
 SAIRA = os.path.join(DEF, "saira-semicondensed-medium.ttf")
 SS = ic.SS

@@ -13,7 +13,7 @@ import os
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".."))
-HERE = os.path.join(REPO, "Themes", "direction-a", "src", "design")
+HERE = os.path.join(REPO, "Themes", "ab2.0.0", "src", "design")
 OUT = os.path.join(HERE, "evoimg")
 BG = os.path.join(HERE, "bg-direction-a-01-smooth.png")
 

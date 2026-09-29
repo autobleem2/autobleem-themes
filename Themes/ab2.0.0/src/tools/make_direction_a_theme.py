@@ -1,4 +1,4 @@
-"""Direction A (CONSOLE-14): assemble the trial theme Themes/direction-a/ from the design sources.
+"""Direction A (CONSOLE-14): assemble the trial theme Themes/ab2.0.0/ from the design sources.
 
 A first build on today's theme.json format (the owner, 2026-09-29): what the format can already carry. What
 needs code changes is listed in ../README.md. Writes, next to src/:
@@ -29,7 +29,7 @@ from PIL import Image  # noqa: E402
 import make_direction_a_icons as ic  # noqa: E402
 import make_direction_a_variants as va  # noqa: E402
 
-THEME = os.path.join(va.REPO, "Themes", "direction-a")
+THEME = os.path.join(va.REPO, "Themes", "ab2.0.0")
 DESIGN = va.A
 
 

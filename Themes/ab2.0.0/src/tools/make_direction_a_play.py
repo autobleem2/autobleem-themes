@@ -16,7 +16,7 @@ import os
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".."))
-HERE = os.path.join(REPO, "Themes", "direction-a", "src", "design")
+HERE = os.path.join(REPO, "Themes", "ab2.0.0", "src", "design")
 _ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
 _ap.add_argument("--font", default=os.environ.get("AB_FONT") or os.path.join(
     REPO, "..", "src", "resources", "fonts", "OpenSans-Bold.ttf"))
