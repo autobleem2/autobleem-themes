@@ -228,6 +228,76 @@ def icon_arrow():
     return finish(out, 24, 24)
 
 
+def switch(on):
+    """on.png / off.png 60x30 (the classic UI's checkboxes): a pill track with a knob."""
+    w, h = 60, 30
+    size = (w * SS, h * SS)
+    box = (6, 7, 54, 23)
+    track = shape(w, h, lambda d, s: d.rounded_rectangle([v * s for v in box], radius=8 * s, fill=255))
+    out = Image.new("RGBA", size, (0, 0, 0, 0))
+    if on:
+        out = Image.alpha_composite(out, colour(size, CYAN, glow(track, 2.5, 0.6)))
+        out = Image.alpha_composite(out, colour(size, CYAN, track))
+        kx, knob_rgb = 46, (240, 248, 250)
+    else:
+        out = Image.alpha_composite(out, colour(size, (110, 124, 138), track))
+        body = gradient(size, box)
+        body.putalpha(shape(w, h, lambda d, s: d.rounded_rectangle(
+            [(box[0] + 1.5) * s, (box[1] + 1.5) * s, (box[2] - 1.5) * s, (box[3] - 1.5) * s], radius=6.5 * s,
+            fill=255)))
+        out = Image.alpha_composite(out, body)
+        kx, knob_rgb = 14, (150, 162, 175)
+    knob = shape(w, h, lambda d, s: d.ellipse([(kx - 6) * s, 9 * s, (kx + 6) * s, 21 * s], fill=255))
+    out = Image.alpha_composite(out, colour(size, (0, 0, 0), glow(knob, 1, 0.5)))
+    out = Image.alpha_composite(out, colour(size, knob_rgb, knob))
+    return finish(out, w, h)
+
+
+def memcard_grid():
+    """256x420: the manager's 4 x 6 dots at the original positions - graphite beads with a cyan rim."""
+    w, h = 256, 420
+    size = (w * SS, h * SS)
+    dots = blank(w, h)
+    d = ImageDraw.Draw(dots)
+    for cx in (6.5, 87, 167.5, 247.5):
+        for cy in (7.5, 87.5, 167.5, 247.5, 327.5, 407.5):
+            r = 5 * SS
+            d.ellipse((cx * SS - r, cy * SS - r, cx * SS + r, cy * SS + r), fill=255)
+    out = Image.new("RGBA", size, (0, 0, 0, 0))
+    out = Image.alpha_composite(out, colour(size, CYAN, glow(dots, 1.2, 0.5)))
+    out = Image.alpha_composite(out, colour(size, CYAN, dots))
+    inner = dots.filter(ImageFilter.MinFilter(int(1.5 * SS) * 2 + 1))
+    out = Image.alpha_composite(out, colour(size, FILL_BOT, inner))
+    return finish(out, w, h)
+
+
+def memcard_pencil():
+    """42x42, the tip at the top-left corner: a stylus - graphite barrel, cyan rim, glowing cyan tip."""
+    import math
+    w, h = 42, 42
+    size = (w * SS, h * SS)
+    a = math.radians(45)
+    ux, uy, px_, py_ = math.cos(a), math.sin(a), -math.sin(a), math.cos(a)
+
+    def pt(t, n):
+        return ((1.5 + ux * t + px_ * n) * SS, (1.5 + uy * t + py_ * n) * SS)
+
+    half = 5
+    tip = shape(w, h, lambda d, s: d.polygon([pt(0, 0), pt(11, -half), pt(11, half)], fill=255))
+    barrel = shape(w, h, lambda d, s: d.polygon([pt(11, -half), pt(50, -half), pt(50, half), pt(11, half)],
+                                                fill=255))
+    out = Image.new("RGBA", size, (0, 0, 0, 0))
+    both = ImageChops.lighter(tip, barrel)
+    out = Image.alpha_composite(out, colour(size, (0, 0, 0), glow(both, 1.5, 0.6)))
+    out = Image.alpha_composite(out, colour(size, CYAN, barrel))
+    body = gradient(size, (0, 0, w, h))
+    body.putalpha(barrel.filter(ImageFilter.MinFilter(int(1.2 * SS) * 2 + 1)))
+    out = Image.alpha_composite(out, body)
+    out = Image.alpha_composite(out, colour(size, CYAN, glow(tip, 1.2, 0.8)))
+    out = Image.alpha_composite(out, colour(size, (240, 248, 250), tip))
+    return finish(out, w, h)
+
+
 def sheet(new, old):
     """Two rows on the background at 2x: today's default icons over the new ones."""
     bg = Image.open(BG).convert("RGBA")
@@ -256,6 +326,26 @@ def main():
         im.save(os.path.join(OUT, f"{n}-direction-a-01.png"))
     old = {n: Image.open(os.path.join(DEFAULT, n + ".png")).convert("RGBA") for n in new}
     sheet(new, old).save(os.path.join(OUT, "icons-sheet-01.png"))
+    # batch 2: the classic UI's switch, the memory card manager's cursor and dot grid
+    new2 = {"on": switch(True), "off": switch(False), "memcard_pencil": memcard_pencil()}
+    for n, im in new2.items():
+        im.save(os.path.join(OUT, f"{n}-direction-a-01.png"))
+    grid = memcard_grid()
+    grid.save(os.path.join(OUT, "memcard_grid-direction-a-01.png"))
+    old2 = {n: Image.open(os.path.join(REPO, "Themes", "default", n + ".png" if n in ("on", "off")
+                                       else f"images/{n}.png")).convert("RGBA") for n in new2}
+    s2 = sheet(new2, old2)
+    # the grids side by side at 1x under it, with the pencil on a slot corner
+    og = Image.open(os.path.join(DEFAULT, "memcard_grid.png")).convert("RGBA")
+    bg = Image.open(BG).convert("RGBA").resize((s2.width, 480))
+    for k, g in enumerate((og, grid)):
+        x = s2.width // 4 * (1 + 2 * k) - g.width // 2
+        bg.alpha_composite(g, (x, 30))
+        bg.alpha_composite(new2["memcard_pencil"] if k else old2["memcard_pencil"], (x + 87, 30 + 87))
+    full = Image.new("RGBA", (s2.width, s2.height + bg.height))
+    full.alpha_composite(s2, (0, 0))
+    full.alpha_composite(bg, (0, s2.height))
+    full.save(os.path.join(OUT, "icons-sheet-02.png"))
     print("written:", OUT)
 
 
