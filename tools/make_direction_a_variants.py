@@ -75,10 +75,12 @@ def frame(w, h, box, v, edge=None, stroke=2, body_alpha=255, glow_px=6, glow_a=0
     size = (w * ss, h * ss)
     m = shape_mask(w, h, box, v["shape"], ss=ss)
     out = Image.new("RGBA", size, (0, 0, 0, 0))
+    # the inside, so a see-through body shows the background and not the stroke's colour or the glow
+    inner = shape_mask(w, h, box, v["shape"], inset=stroke if v["shape"] != "round-small" else 1, ss=ss)
     if v["glow"] > 0:
         g = m.filter(ImageFilter.GaussianBlur(glow_px * ss)).point(lambda p: int(min(255, p * glow_a * v["glow"])))
-        out = Image.alpha_composite(out, solid(size, edge, g))
-    out = Image.alpha_composite(out, solid(size, edge, m))
+        out = Image.alpha_composite(out, solid(size, edge, ImageChops.subtract(g, inner)))
+    out = Image.alpha_composite(out, solid(size, edge, ImageChops.subtract(m, inner)))
     if v["shape"] == "round-small":  # frosted: lighter, a little see-through
         top, bot = (58, 66, 78), (36, 42, 52)
     else:
@@ -89,7 +91,6 @@ def frame(w, h, box, v, edge=None, stroke=2, body_alpha=255, glow_px=6, glow_a=0
     for y in range(size[1]):
         t = min(1.0, max(0.0, (y - y0) / max(1, y1 - y0)))
         bd.line([(0, y), (size[0], y)], fill=tuple(round(top[k] + (bot[k] - top[k]) * t) for k in range(3)) + (255,))
-    inner = shape_mask(w, h, box, v["shape"], inset=stroke if v["shape"] != "round-small" else 1, ss=ss)
     body.putalpha(inner.point(lambda p: p * body_alpha // 255))
     return Image.alpha_composite(out, body)
 
