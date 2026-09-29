@@ -4,7 +4,7 @@ Cut corners (the memory card's shape), cyan lines, magenta for the focused item.
 canvases as the default theme, written into design/direction-a/v2/ (not into Themes/ yet):
   menu_settings/guide/memcard/resume.png  118x118
   play_button.png  200x68  the chamfered frame alone (magenta - Play is the focused item)
-  play_text.png    200x68  the triangle and "PLAY" alone, same canvas
+  play_text.png    262x68  the triangle and "PLAY" alone (262 wide: the launcher centres it on x 640)
   meta_panel.png   30x30   the pad glyph on a small chamfered tile
   launcher_footer.png 1280x88  a chamfered panel behind the hint bar (hintBar 360,632 900x56 -> the
                    panel spans x 348..1268 of the strip)
@@ -45,7 +45,11 @@ def play_parts():
     txt = va.lines(txt, tri, V["focus"], V)
     ImageDraw.Draw(txt).text(((gx + tri_h * 0.87 + gap) * s, cy * s), "PLAY", font=f, fill=va.WHITE + (255,),
                              anchor="lm")
-    return btn, txt.resize((w, h), Image.LANCZOS)
+    # the launcher draws playText at x = 640 - 262/2 and playButton at x = 540 (evoui_launcher_screen.cpp):
+    # the text's canvas is 262 wide, so the 200-wide content goes 31 px in to sit on the button
+    wide = Image.new("RGBA", (262, h), (0, 0, 0, 0))
+    wide.alpha_composite(txt.resize((w, h), Image.LANCZOS), (31, 0))
+    return btn, wide
 
 
 def meta_panel():

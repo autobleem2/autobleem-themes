@@ -1,0 +1,101 @@
+{
+  "format": 1,
+  "classic": {
+    "background": "background.jpg",
+    "logo": {
+      "file": "ab.png",
+      "x": 400,
+      "y": 160,
+      "w": 480,
+      "h": 360
+    },
+    "menuLines": 12,
+    "menuPanel": {
+      "x": 30,
+      "y": 10,
+      "w": 1220,
+      "h": 615,
+      "color": "#1a212b",
+      "alpha": 215
+    },
+    "statusBar": {
+      "x": 30,
+      "y": -670,
+      "w": 1220,
+      "h": 33,
+      "color": "#1a212b",
+      "alpha": 215,
+      "textY": 662
+    },
+    "textColor": "#f0f8fa",
+    "textShadow": true,
+    "keyboardKey": {
+      "color": "#3a4654",
+      "alpha": 215
+    },
+    "labelColor": "#28313d",
+    "freeSpaceText": {
+      "x": 180,
+      "y": 35
+    },
+    "buttons": {
+      "cross": "cross.png",
+      "circle": "circle.png",
+      "square": "square.png",
+      "triangle": "triangle.png",
+      "start": "start.png",
+      "select": "select.png",
+      "l1": "l1.png",
+      "r1": "r1.png",
+      "l2": "l2.png",
+      "r2": "r2.png",
+      "check": "on.png",
+      "uncheck": "off.png",
+      "esc": "esc.png",
+      "enter": "enter.png",
+      "tab": "tab.png"
+    }
+  },
+  "launcher": {
+    "background": "images/launcher_background.png",
+    "footer": "images/launcher_footer.png",
+    "playButton": "images/play_button.png",
+    "playText": "images/play_text.png",
+    "metaPanel": "images/meta_panel.png",
+    "metaPanelSlides": true,
+    "textShadow": true,
+    "arrow": "images/arrow.png",
+    "hintBar": {
+      "x": 360,
+      "y": 642,
+      "w": 900,
+      "h": 68
+    },
+    "menuIcons": {
+      "settings": "images/menu_settings.png",
+      "guide": "images/menu_guide.png",
+      "memcard": "images/menu_memcard.png",
+      "resume": "images/menu_resume.png",
+      "resumePicture": {
+        "x": 25,
+        "y": 33,
+        "w": 68,
+        "h": 52
+      }
+    },
+    "memcardManager": {
+      "grid": "images/memcard_grid.png",
+      "pencil": "images/memcard_pencil.png"
+    },
+    "fonts": {
+      "medium": "font/RedHatText-Medium.ttf",
+      "bold": "font/RedHatText-SemiBold.ttf"
+    },
+    "colors": {
+      "text": "#f0f8fa",
+      "secondary": "#96a4b2",
+      "hint": "#c8d2dc",
+      "selection": "#ff46aa"
+    }
+  }
+}

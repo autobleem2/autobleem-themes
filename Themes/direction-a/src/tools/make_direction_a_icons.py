@@ -14,8 +14,8 @@ import os
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
-REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-HERE = os.path.join(REPO, "design", "direction-a")
+REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".."))
+HERE = os.path.join(REPO, "Themes", "direction-a", "src", "design")
 OUT = os.path.join(HERE, "icons")
 BG = os.path.join(HERE, "bg-direction-a-01-smooth.png")
 DEFAULT = os.path.join(REPO, "Themes", "default", "images")

@@ -13,8 +13,8 @@ import os
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-A = os.path.join(REPO, "design", "direction-a")
+REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".."))
+A = os.path.join(REPO, "Themes", "direction-a", "src", "design")
 DEF = os.path.join(REPO, "Themes", "default")
 
 CYAN = (54, 217, 224)
