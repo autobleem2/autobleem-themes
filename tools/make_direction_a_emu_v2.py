@@ -11,8 +11,9 @@ import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
-LAUNCHER = sys.argv[sys.argv.index("--launcher") + 1]
-sys.argv = [sys.argv[0], "--font-dir", os.path.join(LAUNCHER, "src", "resources", "fonts")]
+if "--launcher" in sys.argv:  # run on its own; imported, the caller has set sys.argv up already
+    LAUNCHER = sys.argv[sys.argv.index("--launcher") + 1]
+    sys.argv = [sys.argv[0], "--font-dir", os.path.join(LAUNCHER, "src", "resources", "fonts")]
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import make_direction_a_screens_v2 as sc  # noqa: E402  (parses --font-dir)
 import make_direction_a_variants as va  # noqa: E402
