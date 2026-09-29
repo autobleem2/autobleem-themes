@@ -122,8 +122,8 @@ def lightgun(two):
         d.polygon([(S(x), S(y)) for x, y in [(13.3, 13), (18.3, 13), (17.8, 15.8), (15, 15.8), (14.5, 17), (12.8, 17)]],
                   fill=0)
     else:
-        d.polygon(gun_poly(0, 0.5, 0.6), fill=255)
-        d.polygon(gun_poly(12.5, 14, 0.6), fill=255)
+        d.polygon(gun_poly(0, 0, 0.6), fill=255)
+        d.polygon(gun_poly(12.5, 13, 0.6), fill=255)
     return m
 
 
@@ -150,7 +150,7 @@ def tab_retroarch():
     d.ellipse([S(16), S(5), S(32), S(21)], outline=255, width=round(S(3)))
     d.ellipse([S(39), S(26), S(47), S(34)], fill=255)
     d.ellipse([S(44), S(47), S(50), S(53)], fill=255)
-    return m
+    return ImageChops.offset(m, 0, int(1.5 * SS))  # optical centre
 
 
 def dpad(direction):
@@ -164,12 +164,12 @@ def dpad(direction):
 
 def build(font):
     icons = {
-        "usb": (badge("USB", 30, 30, (1, 9, 29, 23), font), 30, 30),
-        "sd": (badge("SD", 30, 30, (4, 8, 26, 22), font), 30, 30),
-        "hd": (badge("HD", 30, 30, (3, 7, 27, 21), font), 30, 30),
+        "usb": (badge("USB", 30, 30, (1, 8, 29, 22), font), 30, 30),
+        "sd": (badge("SD", 30, 30, (3, 8, 27, 22), font), 30, 30),
+        "hd": (badge("HD", 30, 30, (3, 8, 27, 22), font), 30, 30),
         "lock": (lock(False), 30, 30),
         "unlock": (lock(True), 30, 30),
-        "favorite": (star(29, 32, 14.5, 16.5, 12, 5.2), 29, 32),
+        "favorite": (star(29, 32, 14.5, 17, 12, 5.2), 29, 32),
         "cd": (disc(30, 30, 15, 15, 12.5, 2, 3.5), 30, 30),
         "lightgun": (lightgun(False), 30, 30),
         "lightgun2": (lightgun(True), 30, 30),
@@ -184,20 +184,24 @@ def build(font):
 
 def sheet(new, evo_dir):
     names = list(new)
-    cell = 120
-    w, h = cell * len(names) // 2 + 40, 4 * cell + 40
-    bg = Image.open(BG).convert("RGBA")
-    sc = max(w / bg.width, h / bg.height)
-    bg = bg.resize((round(bg.width * sc) + 1, round(bg.height * sc) + 1), Image.LANCZOS)
-    out = bg.crop((0, bg.height - h, w, bg.height))
+    # a plain graphite backdrop and a fixed grid: every canvas centred in its cell at the same scale per size
+    cell, left = 120, 70
     half = len(names) // 2
+    w, h = left + cell * half + 20, 4 * cell + 40
+    out = Image.new("RGBA", (w, h), (24, 29, 36, 255))
+    d = ImageDraw.Draw(out)
+    for block in range(2):
+        y0 = 20 + block * 2 * cell
+        d.rectangle([left - 10, y0 + cell, w - 20, y0 + cell], fill=(60, 70, 82, 255))
+        d.text((12, y0 + cell // 2), "dzis", fill=(150, 160, 170, 255), anchor="lm")
+        d.text((12, y0 + cell + cell // 2), "A v01", fill=CYAN + (255,), anchor="lm")
     for k, n in enumerate(names):
         col, block = k % half, k // half
         old = Image.open(os.path.join(evo_dir, n + ".png")).convert("RGBA")
         for row, im in enumerate((old, new[n])):
             f = 3 if im.width <= 32 else 1.5
-            im = im.resize((int(im.width * f), int(im.height * f)), Image.LANCZOS)
-            x = 20 + col * cell + (cell - im.width) // 2
+            im = im.resize((round(im.width * f), round(im.height * f)), Image.LANCZOS)
+            x = left + col * cell + (cell - im.width) // 2
             y = 20 + (block * 2 + row) * cell + (cell - im.height) // 2
             out.alpha_composite(im, (x, y))
     return out
