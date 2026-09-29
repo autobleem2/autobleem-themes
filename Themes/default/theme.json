@@ -93,6 +93,18 @@
     "memcardManager": {
       "grid": "images/memcard_grid.png",
       "pencil": "images/memcard_pencil.png"
+    },
+    "colors": {
+      "text": "#ffffff",
+      "secondary": "#646464",
+      "row": "secondary",
+      "rowSelected": "text",
+      "heading": "secondary",
+      "value": "row",
+      "description": "secondary",
+      "footer": "text",
+      "selectionBand": "text",
+      "edge": "secondary"
     }
   },
   "sounds": {
