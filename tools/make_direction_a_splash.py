@@ -1,7 +1,7 @@
 """Direction A (CONSOLE-14): the launcher splash and the plymouth boot screen with logo B4.
 
 The two stay slightly different, as today's pair does: the splash (launcher src/resources/splash/autobleem.jpg)
-sets the logo on the Direction A background with a tagline; the plymouth picture (appliance
+sets the logo on the Direction A background (the debanded copy, tools/deband.py) with a tagline; the plymouth picture (appliance
 payload_linux/system/plymouth/splash.png) sets it on black - its script paints black around the picture and
 fades it in - so the frame's edges stay pure black and only a soft glow sits behind the logo.
 
@@ -24,6 +24,7 @@ ARGS, rest = _ap.parse_known_args()
 sys.argv = [sys.argv[0]] + rest
 import make_direction_a_logo as base  # noqa: E402  (parses --font-dir)
 import make_direction_a_logo2 as logos  # noqa: E402
+from deband import deband  # noqa: E402
 
 OUT = os.path.join(base.DESIGN, "splash")
 SW, SH = 1280, 720
@@ -53,7 +54,7 @@ def radial(size, center, radius, color, peak):
 
 
 def splash():
-    bg = Image.open(os.path.join(base.DESIGN, "bg-direction-a-01.png")).convert("RGBA").resize((SW, SH), Image.LANCZOS)
+    bg = Image.open(os.path.join(base.DESIGN, "bg-direction-a-01-smooth.png")).convert("RGBA").resize((SW, SH), Image.LANCZOS)
     logo = logo_at(820)
     x, y = (SW - logo.width) // 2, 300 - logo.height // 2
     bg.alpha_composite(logo, (x, y))
@@ -72,7 +73,10 @@ def plymouth():
     d = ImageDraw.Draw(im)
     for w in range(6):
         d.rectangle((w, w, SW - 1 - w, SH - 1 - w), outline=(0, 0, 0, 255))
-    return im.convert("RGB")
+    # the glows are 8-bit alpha ramps: smooth + dither them, but keep what was pure black exactly black
+    rgb = im.convert("RGB")
+    black = rgb.convert("L").point(lambda v: 255 if v == 0 else 0)
+    return Image.composite(Image.new("RGB", rgb.size, (0, 0, 0)), deband(rgb), black)
 
 
 def compare(new_splash, new_ply):
@@ -98,7 +102,7 @@ def compare(new_splash, new_ply):
 def main():
     os.makedirs(OUT, exist_ok=True)
     s, p = splash(), plymouth()
-    s.save(os.path.join(OUT, "splash-b4.jpg"), quality=92)
+    s.save(os.path.join(OUT, "splash-b4.jpg"), quality=95, subsampling=0)
     p.save(os.path.join(OUT, "plymouth-b4.png"))
     compare(s, p).save(os.path.join(OUT, "splash-compare.png"))
     print("written:", sorted(os.listdir(OUT)))
