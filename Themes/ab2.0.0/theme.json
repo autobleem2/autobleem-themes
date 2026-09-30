@@ -66,10 +66,10 @@
     "textShadow": true,
     "arrow": "images/arrow.png",
     "hintBar": {
-      "x": 360,
-      "y": 642,
-      "w": 900,
-      "h": 68
+      "x": 348,
+      "y": 638,
+      "w": 920,
+      "h": 78
     },
     "menuIcons": {
       "settings": "images/menu_settings.png",
