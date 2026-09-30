@@ -1,5 +1,9 @@
 {
   "format": 1,
+  "music": {
+    "file": "ab.ogg",
+    "loop": true
+  },
   "classic": {
     "background": "background.jpg",
     "logo": {
