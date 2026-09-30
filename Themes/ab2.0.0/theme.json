@@ -111,10 +111,12 @@
       "selection": "#ff46aa",
       "heading": "#36d9e0",
       "edge": "#36d9e0",
-      "selectionBand": "#ff46aa"
+      "selectionBand": "#ff46aa",
+      "disabled": { "color": "#28303a", "alpha": 120 }
     },
     "iconHalo": false,
     "icons": {
+      "storeInstalled": "images/store_installed.png",
       "players": "icons/players.png",
       "disc": "icons/disc.png",
       "usb": "icons/usb.png",
