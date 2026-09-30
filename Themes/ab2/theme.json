@@ -53,7 +53,12 @@
     "metaPanel": "images/meta_panel.png",
     "metaPanelSlides": true,
     "arrow": "images/arrow.png",
-    "hintBar": { "x": 480, "y": 624, "w": 776, "h": 72 },
+    "hintBar": {
+      "x": 480,
+      "y": 624,
+      "w": 776,
+      "h": 72
+    },
     "hints": {
       "cross": "images/hint_cross.png",
       "circle": "images/hint_circle.png",
@@ -64,8 +69,16 @@
       "guide": "images/menu_guide.png",
       "memcard": "images/menu_memcard.png",
       "resume": "images/menu_resume.png",
-      "resumePicture": { "x": 25, "y": 22, "w": 68, "h": 52 },
-      "resumeSlotLabel": { "x": 34, "y": 78 }
+      "resumePicture": {
+        "x": 25,
+        "y": 22,
+        "w": 68,
+        "h": 52
+      },
+      "resumeSlotLabel": {
+        "x": 34,
+        "y": 78
+      }
     },
     "memcardManager": {
       "grid": "images/memcard_grid.png",
@@ -73,7 +86,120 @@
     },
     "colors": {
       "hint": "#ffffff",
-      "selection": "#4fc3f7"
+      "selection": "#4fc3f7",
+      "text": "#eaf6ff",
+      "secondary": "#8fb3d9",
+      "heading": "#7fe3ff",
+      "edge": "#3fd8f0",
+      "selectionBand": "#4fc3f7",
+      "disabled": {
+        "color": "#06163a",
+        "alpha": 120
+      }
+    },
+    "spinner": {
+      "image": "images/spinner.png",
+      "frames": 24,
+      "fps": 24
+    },
+    "frames": {
+      "panel": {
+        "image": "frames/panel.png",
+        "slice": 36,
+        "bleed": 12
+      },
+      "selection": {
+        "image": "frames/selection.png",
+        "slice": {
+          "left": 12,
+          "top": 10,
+          "right": 12,
+          "bottom": 10
+        },
+        "bleed": 4
+      },
+      "heading": {
+        "image": "frames/heading.png",
+        "slice": {
+          "left": 12,
+          "top": 6,
+          "right": 12,
+          "bottom": 6
+        }
+      },
+      "key": {
+        "image": "frames/key.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keyFunction": {
+        "image": "frames/key_function.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keyLit": {
+        "image": "frames/key_lit.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keySelected": {
+        "image": "frames/key_selected.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "field": {
+        "image": "frames/field.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "toast": {
+        "image": "frames/toast.png",
+        "slice": 20,
+        "bleed": 8
+      },
+      "chip": {
+        "image": "frames/chip.png",
+        "slice": 10,
+        "bleed": 2
+      },
+      "progressTrack": {
+        "image": "frames/progress_track.png",
+        "slice": {
+          "left": 4,
+          "top": 2,
+          "right": 4,
+          "bottom": 2
+        }
+      },
+      "progressFill": {
+        "image": "frames/progress_fill.png",
+        "slice": {
+          "left": 4,
+          "top": 2,
+          "right": 4,
+          "bottom": 2
+        }
+      },
+      "tab": {
+        "image": "frames/tab.png",
+        "slice": 16
+      },
+      "band": {
+        "image": "frames/band.png",
+        "slice": 24
+      },
+      "plate": {
+        "image": "frames/plate.png",
+        "slice": 16,
+        "bleed": 2
+      },
+      "coverGlow": {
+        "image": "frames/cover_glow.png",
+        "slice": 64,
+        "bleed": 48,
+        "fill": false,
+        "tint": "selection"
+      }
     }
   }
 }
