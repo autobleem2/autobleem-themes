@@ -23,6 +23,145 @@
     "memcardManager": {
       "grid": "images/memcard_grid.png",
       "pencil": "images/memcard_pencil.png"
-    }
+    },
+    "hintBar": {
+      "x": 140,
+      "y": 642,
+      "w": 1000,
+      "h": 68
+    },
+    "spinner": {
+      "image": "images/spinner.png",
+      "frames": 24,
+      "fps": 24
+    },
+    "colors": {
+      "text": "#ffffff",
+      "secondary": "#b9cde6",
+      "hint": "#34465e",
+      "selection": "#ffffff",
+      "heading": "#ffffff",
+      "edge": "#ffffff",
+      "selectionBand": "#ffffff",
+      "disabled": {
+        "color": "#0f2a52",
+        "alpha": 120
+      }
+    },
+    "frames": {
+      "panel": {
+        "image": "frames/panel.png",
+        "slice": 36,
+        "bleed": 12
+      },
+      "selection": {
+        "image": "frames/selection.png",
+        "slice": {
+          "left": 12,
+          "top": 10,
+          "right": 12,
+          "bottom": 10
+        },
+        "bleed": 4
+      },
+      "heading": {
+        "image": "frames/heading.png",
+        "slice": {
+          "left": 12,
+          "top": 6,
+          "right": 12,
+          "bottom": 6
+        }
+      },
+      "key": {
+        "image": "frames/key.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keyFunction": {
+        "image": "frames/key_function.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keyLit": {
+        "image": "frames/key_lit.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keySelected": {
+        "image": "frames/key_selected.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "field": {
+        "image": "frames/field.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "toast": {
+        "image": "frames/toast.png",
+        "slice": 20,
+        "bleed": 8
+      },
+      "chip": {
+        "image": "frames/chip.png",
+        "slice": 10,
+        "bleed": 2
+      },
+      "progressTrack": {
+        "image": "frames/progress_track.png",
+        "slice": {
+          "left": 4,
+          "top": 2,
+          "right": 4,
+          "bottom": 2
+        }
+      },
+      "progressFill": {
+        "image": "frames/progress_fill.png",
+        "slice": {
+          "left": 4,
+          "top": 2,
+          "right": 4,
+          "bottom": 2
+        }
+      },
+      "tab": {
+        "image": "frames/tab.png",
+        "slice": 16
+      },
+      "band": {
+        "image": "frames/band.png",
+        "slice": 24
+      },
+      "plate": {
+        "image": "frames/plate.png",
+        "slice": 16,
+        "bleed": 2
+      },
+      "coverGlow": {
+        "image": "frames/cover_glow.png",
+        "slice": 64,
+        "bleed": 48,
+        "fill": false,
+        "tint": "selection"
+      }
+    },
+    "icons": {
+      "players": "icons/players.png",
+      "disc": "icons/disc.png",
+      "usb": "icons/usb.png",
+      "internal": "icons/internal.png",
+      "hd": "icons/hd.png",
+      "sd": "icons/sd.png",
+      "lock": "icons/lock.png",
+      "unlock": "icons/unlock.png",
+      "favorite": "icons/favorite.png",
+      "retroarch": "icons/retroarch.png",
+      "lightgun": "icons/lightgun.png",
+      "lightgun2": "icons/lightgun2.png"
+    },
+    "iconHalo": true,
+    "textShadow": true
   }
 }
