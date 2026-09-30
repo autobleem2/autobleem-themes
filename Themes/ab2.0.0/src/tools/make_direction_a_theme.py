@@ -109,13 +109,29 @@ def main():
             "memcardManager": {"grid": "images/memcard_grid.png", "pencil": "images/memcard_pencil.png"},
             "fonts": {"medium": "font/RedHatText-Medium.ttf", "bold": "font/RedHatText-SemiBold.ttf"},
             "colors": {"text": "#f0f8fa", "secondary": "#96a4b2", "hint": "#c8d2dc", "selection": "#ff46aa"},
+            # the ab_gui G4 frames (core docs/ab-gui-frames-spec.md) - the owner chose the magenta rim with a glow
+            # (2026-09-30); full colour, no tint; a launcher without G4 ignores the block
+            "frames": {
+                "panel": {"image": "frames/panel.png", "slice": 36, "bleed": 12},
+                "selection": {"image": "frames/selection.png",
+                              "slice": {"left": 12, "top": 10, "right": 12, "bottom": 10}, "bleed": 4},
+                "heading": {"image": "frames/heading.png", "slice": {"left": 12, "top": 6, "right": 12, "bottom": 6}},
+                "key": {"image": "frames/key.png", "slice": 16, "bleed": 4},
+                "keyFunction": {"image": "frames/key_function.png", "slice": 16, "bleed": 4},
+                "keyLit": {"image": "frames/key_lit.png", "slice": 16, "bleed": 4},
+                "keySelected": {"image": "frames/key_selected.png", "slice": 16, "bleed": 4},
+                "field": {"image": "frames/field.png", "slice": 16, "bleed": 4},
+            },
         },
     }
+    # the frames: the chosen variant's files, drawn by make_direction_a_frames.py
+    chosen = os.path.join(DESIGN, "frames", "outline-glow", "frames")
+    shutil.copytree(chosen, os.path.join(THEME, "frames"), dirs_exist_ok=True)
     with open(os.path.join(THEME, "theme.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(spec, fh, indent=2)
         fh.write("\n")
     with open(os.path.join(THEME, "credit.txt"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write("direction-a - a trial of AutoBleem 2's new look (CONSOLE-14).\n"
+        fh.write("ab2.0.0 - a trial of AutoBleem 2's new look (CONSOLE-14).\n"
                  "Images: drawn by src/tools/*.py (vectors and a procedural background); no photographs, no AI\n"
                  "pictures. Font: Red Hat Text, SIL Open Font License 1.1 (font/OFL.txt), static cuts of the\n"
                  "variable font. Sounds, music and the button glyphs come from the default theme.\n")

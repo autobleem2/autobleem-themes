@@ -34,6 +34,13 @@ the game's details, the menus, the hints, the panels), `launcher.colors` (text, 
 graphite menu panel/status bar/keyboard/label colours, the cut-corner on/off switch. Everything else (hint
 icons, the other button glyphs, sounds, music, the settings panel) falls back to `Themes/default`.
 
+**The ab_gui G4 frames** (core `docs/ab-gui-frames-spec.md`, the first set): `frames/` holds panel, selection,
+heading, key, key_function, key_lit, key_selected and field at 1x and @2x, with the spec's sizes, slices and
+bleeds, and `theme.json` has the `launcher.frames` block. The owner's choice (2026-09-30): the selected row and
+key as a **magenta rim with a glow** (the fill and flat variants were drawn too - `design/frames/`); full colour,
+no tint. A launcher before G4 ignores the block; they show once G4 (G4g for the theme) lands.
+Drawn by `tools/make_direction_a_frames.py`.
+
 **Not checked on a device yet** - it needs a launcher build with this theme on the VM/Pi (Options -> theme).
 
 ## What needs code to look like the mockups
