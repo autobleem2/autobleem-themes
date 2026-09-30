@@ -217,16 +217,6 @@
         "image": "frames/tab.png",
         "slice": 16
       },
-      "tile": {
-        "image": "frames/tile.png",
-        "slice": 24,
-        "bleed": 8
-      },
-      "tileSelected": {
-        "image": "frames/tile_selected.png",
-        "slice": 24,
-        "bleed": 8
-      },
       "band": {
         "image": "frames/band.png",
         "slice": 24
