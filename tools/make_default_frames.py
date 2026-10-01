@@ -48,7 +48,8 @@ def layer(size, mask, grey, alpha):
 
 
 def sheet(w, h, bleed, r, sheet_a, rim_a, shadow_a):
-    """a panel-like frame: a soft shadow in the bleed, its own black sheet, a white hairline rim"""
+    """a panel-like frame: a soft shadow in the bleed, its own sheet (a dark grey the tint turns into the theme's
+    dark colour), a light hairline rim (the tint itself)"""
     def draw(s):
         size = (w * s, h * s)
         b = bleed * s
@@ -57,7 +58,7 @@ def sheet(w, h, bleed, r, sheet_a, rim_a, shadow_a):
         sh = rrect_mask(size, (box[0], box[1] + 2 * s, box[2], box[3] + 3 * s), r * s).filter(
             ImageFilter.GaussianBlur(min(b, 5 * s)))
         im.alpha_composite(layer(size, ImageChops.subtract(sh, rrect_mask(size, box, r * s)), 0, shadow_a))
-        im.alpha_composite(layer(size, rrect_mask(size, box, r * s), 0, sheet_a))
+        im.alpha_composite(layer(size, rrect_mask(size, box, r * s), SHEET_GREY, sheet_a))
         im.alpha_composite(layer(size, ring(size, box, r * s, s), 255, rim_a))
         return im
     return draw
@@ -108,7 +109,7 @@ def footer(s):
     b = 4 * s
     box = (b, b, size[0] - b, size[1] - b)
     im = Image.new("RGBA", size, (0, 0, 0, 0))
-    im.alpha_composite(layer(size, rrect_mask(size, box, 6 * s, (False, False, True, True)), 0, 90))
+    im.alpha_composite(layer(size, rrect_mask(size, box, 6 * s, (False, False, True, True)), SHEET_GREY // 2, 120))
     top = Image.new("L", size, 0)
     ImageDraw.Draw(top).rectangle([box[0] + 12 * s, box[1], box[2] - 12 * s - 1, box[1] + s - 1], fill=255)
     im.alpha_composite(layer(size, top, 255, 70))
@@ -134,22 +135,23 @@ def bar(alpha):
 
 
 SL = lambda l, t: {"left": l, "top": t, "right": l, "bottom": t}
+SHEET_GREY = 62   # x the edge role = the sheet: default #82b7ed -> #1f2c3a (a dark navy)
 FRAMES = {
-    "panel": (sheet(96, 96, 12, 6, 175, 72, 150), {"slice": 36, "bleed": 12, "tint": "text"}),
+    "panel": (sheet(96, 96, 12, 6, 200, 150, 150), {"slice": 36, "bleed": 12, "tint": "edge"}),
     "selection": (selection, {"slice": SL(12, 10), "bleed": 4, "tint": "selectionBand"}),
-    "heading": (heading, {"slice": SL(12, 6), "tint": "text"}),
-    "key": (plate(48, 48, 4, 5, 255, 24, 78), {"slice": 16, "bleed": 4, "tint": "text"}),
-    "keyFunction": (plate(48, 48, 4, 5, 255, 12, 48), {"slice": 16, "bleed": 4, "tint": "text"}),
-    "keyLit": (plate(48, 48, 4, 5, 255, 66, 150), {"slice": 16, "bleed": 4, "tint": "text"}),
+    "heading": (heading, {"slice": SL(12, 6), "tint": "edge"}),
+    "key": (plate(48, 48, 4, 5, 255, 30, 120), {"slice": 16, "bleed": 4, "tint": "edge"}),
+    "keyFunction": (plate(48, 48, 4, 5, 255, 16, 80), {"slice": 16, "bleed": 4, "tint": "edge"}),
+    "keyLit": (plate(48, 48, 4, 5, 255, 80, 210), {"slice": 16, "bleed": 4, "tint": "edge"}),
     "keySelected": (plate(48, 48, 4, 5, 255, 115, 255, glow_a=200), {"slice": 16, "bleed": 4, "tint": "selectionBand"}),
-    "field": (plate(56, 56, 4, 5, 0, 130, 105), {"slice": 16, "bleed": 4, "tint": "text"}),
-    "chip": (plate(32, 32, 2, 4, 255, 40, 130), {"slice": 10, "bleed": 2, "tint": "text"}),
-    "badge": (plate(40, 40, 4, 5, 0, 120, 90), {"slice": 12, "bleed": 4, "tint": "text"}),
-    "footer": (footer, {"slice": 16, "bleed": 4, "tint": "text"}),
-    "toast": (sheet(64, 64, 8, 8, 205, 80, 160), {"slice": 20, "bleed": 8, "tint": "text"}),
-    "plate": (sheet(48, 48, 2, 6, 195, 64, 0), {"slice": 16, "bleed": 2, "tint": "text"}),
+    "field": (plate(56, 56, 4, 5, 30, 170, 170), {"slice": 16, "bleed": 4, "tint": "edge"}),
+    "chip": (plate(32, 32, 2, 4, 255, 50, 170), {"slice": 10, "bleed": 2, "tint": "edge"}),
+    "badge": (plate(40, 40, 4, 5, 30, 170, 150), {"slice": 12, "bleed": 4, "tint": "edge"}),
+    "footer": (footer, {"slice": 16, "bleed": 4, "tint": "edge"}),
+    "toast": (sheet(64, 64, 8, 8, 215, 165, 160), {"slice": 20, "bleed": 8, "tint": "edge"}),
+    "plate": (sheet(48, 48, 2, 6, 210, 130, 0), {"slice": 16, "bleed": 2, "tint": "edge"}),
     "tab": (tab, {"slice": 16, "tint": "selectionBand"}),
-    "progressTrack": (bar(64), {"slice": SL(4, 2), "tint": "text"}),
+    "progressTrack": (bar(64), {"slice": SL(4, 2), "tint": "edge"}),
     "progressFill": (bar(255), {"slice": SL(4, 2), "tint": "text"}),
 }
 FILE_NAMES = {"keyFunction": "key_function", "keyLit": "key_lit", "keySelected": "key_selected",
