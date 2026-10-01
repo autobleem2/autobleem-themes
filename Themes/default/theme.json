@@ -78,7 +78,7 @@
     "metaPanelSlides": true,
     "textShadow": true,
     "arrow": "images/arrow.png",
-    "hintBar": { "x": 360, "y": 632, "w": 900, "h": 56 },
+    "hintBar": { "x": 360, "y": 632, "w": 900, "h": 64 },
     "hints": {
       "cross": "images/hint_cross.png",
       "circle": "images/hint_circle.png",
@@ -90,9 +90,24 @@
       "memcard": "images/menu_memcard.png",
       "resume": "images/menu_resume.png"
     },
+    "icons": {
+      "players": "icons/players.png"
+    },
     "memcardManager": {
       "grid": "images/memcard_grid.png",
       "pencil": "images/memcard_pencil.png"
+    },
+    "colors": {
+      "text": "#ffffff",
+      "secondary": "#646464",
+      "row": "secondary",
+      "rowSelected": "text",
+      "heading": "secondary",
+      "value": "row",
+      "description": "secondary",
+      "footer": "text",
+      "selectionBand": "text",
+      "edge": "secondary"
     }
   },
   "sounds": {
