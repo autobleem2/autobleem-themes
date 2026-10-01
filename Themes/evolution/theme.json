@@ -51,6 +51,7 @@
     "metaPanel": "images/meta_panel.png",
     "metaPanelSlides": false,
     "arrow": "images/arrow.png",
+    "hintBar": { "x": 540, "y": 630, "w": 730, "h": 56 },
     "hints": {
       "cross": "images/hint_cross.png",
       "circle": "images/hint_circle.png",
