@@ -90,6 +90,9 @@
       "memcard": "images/menu_memcard.png",
       "resume": "images/menu_resume.png"
     },
+    "icons": {
+      "players": "icons/players.png"
+    },
     "memcardManager": {
       "grid": "images/memcard_grid.png",
       "pencil": "images/memcard_pencil.png"
