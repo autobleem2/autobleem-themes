@@ -20,7 +20,7 @@
       "w": 1220,
       "h": 615,
       "color": "#1a212b",
-      "alpha": 215
+      "alpha": 224
     },
     "statusBar": {
       "x": 30,
@@ -28,7 +28,7 @@
       "w": 1220,
       "h": 33,
       "color": "#1a212b",
-      "alpha": 215,
+      "alpha": 224,
       "textY": 662
     },
     "textColor": "#f0f8fa",
