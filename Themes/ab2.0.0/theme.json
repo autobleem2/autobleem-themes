@@ -1,0 +1,261 @@
+{
+  "format": 1,
+  "music": {
+    "file": "ab.ogg",
+    "loop": true
+  },
+  "classic": {
+    "background": "background.jpg",
+    "logo": {
+      "file": "ab.png",
+      "x": 400,
+      "y": 160,
+      "w": 480,
+      "h": 360
+    },
+    "menuLines": 12,
+    "menuPanel": {
+      "x": 30,
+      "y": 10,
+      "w": 1220,
+      "h": 615,
+      "color": "#1a212b",
+      "alpha": 224
+    },
+    "statusBar": {
+      "x": 30,
+      "y": -670,
+      "w": 1220,
+      "h": 33,
+      "color": "#1a212b",
+      "alpha": 224,
+      "textY": 662
+    },
+    "textColor": "#f0f8fa",
+    "textShadow": true,
+    "keyboardKey": {
+      "color": "#3a4654",
+      "alpha": 215
+    },
+    "labelColor": "#28313d",
+    "freeSpaceText": {
+      "x": 180,
+      "y": 35
+    },
+    "buttons": {
+      "cross": "cross.png",
+      "circle": "circle.png",
+      "square": "square.png",
+      "triangle": "triangle.png",
+      "start": "start.png",
+      "select": "select.png",
+      "l1": "l1.png",
+      "r1": "r1.png",
+      "l2": "l2.png",
+      "r2": "r2.png",
+      "check": "on.png",
+      "uncheck": "off.png",
+      "esc": "esc.png",
+      "enter": "enter.png",
+      "tab": "tab.png"
+    }
+  },
+  "launcher": {
+    "background": "images/launcher_background.png",
+    "footer": "images/launcher_footer.png",
+    "playButton": "images/play_button.png",
+    "playText": "images/play_text.png",
+    "metaPanel": "images/meta_panel.png",
+    "metaPanelSlides": true,
+    "textShadow": true,
+    "arrow": "images/arrow.png",
+    "hintBar": {
+      "x": 348,
+      "y": 638,
+      "w": 920,
+      "h": 78
+    },
+    "menuIcons": {
+      "settings": "images/menu_settings.png",
+      "guide": "images/menu_guide.png",
+      "memcard": "images/menu_memcard.png",
+      "resume": "images/menu_resume.png",
+      "resumePicture": {
+        "x": 25,
+        "y": 33,
+        "w": 68,
+        "h": 52
+      },
+      "resumePictureMask": "images/resume_mask.png"
+    },
+    "logo": {
+      "file": "images/logo.png",
+      "x": 22,
+      "y": 626,
+      "w": 317,
+      "h": 75
+    },
+    "spinner": {
+      "image": "images/spinner.png",
+      "frames": 24,
+      "fps": 24
+    },
+    "memcardManager": {
+      "grid": "images/memcard_grid.png",
+      "pencil": "images/memcard_pencil.png"
+    },
+    "fonts": {
+      "medium": "font/RedHatText-Medium.ttf",
+      "bold": "font/RedHatText-SemiBold.ttf"
+    },
+    "colors": {
+      "text": "#f0f8fa",
+      "secondary": "#96a4b2",
+      "hint": "#c8d2dc",
+      "selection": "#ff46aa",
+      "heading": "#36d9e0",
+      "edge": "#36d9e0",
+      "selectionBand": "#ff46aa",
+      "disabled": {
+        "color": "#28303a",
+        "alpha": 120
+      }
+    },
+    "iconHalo": false,
+    "icons": {
+      "storeInstalled": "images/store_installed.png",
+      "players": "icons/players.png",
+      "disc": "icons/disc.png",
+      "usb": "icons/usb.png",
+      "internal": "icons/internal.png",
+      "hd": "icons/hd.png",
+      "sd": "icons/sd.png",
+      "lock": "icons/lock.png",
+      "unlock": "icons/unlock.png",
+      "favorite": "icons/favorite.png",
+      "retroarch": "icons/retroarch.png",
+      "lightgun": "icons/lightgun.png",
+      "lightgun2": "icons/lightgun2.png",
+      "dpadUp": "icons/dpad_up.png",
+      "dpadDown": "icons/dpad_down.png",
+      "dpadLeft": "icons/dpad_left.png",
+      "dpadRight": "icons/dpad_right.png",
+      "tabPlayStation": "icons/tab_playstation.png",
+      "tabRetroArch": "icons/tab_retroarch.png",
+      "tabApps": "icons/tab_apps.png",
+      "extension": "icons/extension.png",
+      "battery": "icons/battery.png",
+      "play": "icons/play.png",
+      "switchOn": "icons/switch_on.png",
+      "switchOff": "icons/switch_off.png"
+    },
+    "frames": {
+      "panel": {
+        "image": "frames/panel.png",
+        "slice": 36,
+        "bleed": 12
+      },
+      "selection": {
+        "image": "frames/selection.png",
+        "slice": {
+          "left": 12,
+          "top": 10,
+          "right": 12,
+          "bottom": 10
+        },
+        "bleed": 4
+      },
+      "heading": {
+        "image": "frames/heading.png",
+        "slice": {
+          "left": 12,
+          "top": 6,
+          "right": 12,
+          "bottom": 6
+        }
+      },
+      "key": {
+        "image": "frames/key.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keyFunction": {
+        "image": "frames/key_function.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keyLit": {
+        "image": "frames/key_lit.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "keySelected": {
+        "image": "frames/key_selected.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "field": {
+        "image": "frames/field.png",
+        "slice": 16,
+        "bleed": 4
+      },
+      "toast": {
+        "image": "frames/toast.png",
+        "slice": 20,
+        "bleed": 8
+      },
+      "hintBar": {
+        "image": "frames/hint_bar.png",
+        "slice": 28,
+        "bleed": 8
+      },
+      "chip": {
+        "image": "frames/chip.png",
+        "slice": 10,
+        "bleed": 2
+      },
+      "progressTrack": {
+        "image": "frames/progress_track.png",
+        "slice": {
+          "left": 4,
+          "top": 2,
+          "right": 4,
+          "bottom": 2
+        }
+      },
+      "progressFill": {
+        "image": "frames/progress_fill.png",
+        "slice": {
+          "left": 4,
+          "top": 2,
+          "right": 4,
+          "bottom": 2
+        }
+      },
+      "tab": {
+        "image": "frames/tab.png",
+        "slice": 16
+      },
+      "band": {
+        "image": "frames/band.png",
+        "slice": 24
+      },
+      "coverGlow": {
+        "image": "frames/cover_glow.png",
+        "slice": 64,
+        "bleed": 48,
+        "fill": false
+      },
+      "plate": {
+        "image": "frames/plate.png",
+        "slice": 16,
+        "bleed": 2
+      },
+      "play": {
+        "image": "frames/play.png",
+        "slice": 32,
+        "bleed": 8
+      }
+    }
+  }
+}
