@@ -10,6 +10,11 @@ on:
   pull_request:
     branches: [develop, master]
   workflow_dispatch:
+    inputs:
+      channel:
+        description: preview = publish this branch's build as the rolling `preview` release (a feature branch)
+        type: string
+        default: ''
 defaults:
   run:
     shell: bash
@@ -81,3 +86,21 @@ jobs:
           files: out/*.tar.gz
           version: ${{ needs.build.outputs.version }}
           dispatch-token: ${{ steps.app.outputs.token }}
+
+  # a preview build (PLATFORM-20): a manual run of a feature branch with channel=preview replaces the assets of
+  # the rolling `preview` pre-release. It never touches `nightly` and never starts an assembly - autobleem-main's
+  # preview workflow builds every component that has the branch, then assembles the preview.
+  preview:
+    if: >-
+      github.event_name == 'workflow_dispatch' && inputs.channel == 'preview' && startsWith(github.ref, 'refs/heads/') && github.ref != 'refs/heads/develop'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions: { contents: write }
+    steps:
+      - uses: actions/download-artifact@v8
+        with: { name: themes-package, path: out }
+      - uses: autobleem2/autobleem-build/.github/actions/nightly-release@develop
+        with:
+          files: out/*.tar.gz
+          tag: preview
+          version: ${{ needs.build.outputs.version }}
