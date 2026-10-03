@@ -8,6 +8,7 @@ own source repositories"). Five themes ship today: `ab2`, `aergb`, `autobleem`, 
 ```
 Themes/<name>/theme.json          the theme, in the format the launcher reads - see below
 Themes/<name>/...                 the files theme.json names: images, fonts, sounds, music, credits
+design/<direction>/               work-in-progress design sources for a new look (not packaged)
 ```
 
 Each theme is exactly what `<launcher>/payload/Themes/<name>/` used to hold. The **format** - what
@@ -23,7 +24,7 @@ Windows editor turn them back to CRLF). Keep every theme's own licence facts wit
 OFL (its own `OFL.txt`/`LICENSE`), `ab2`'s `ab.ogg` and `evolution`'s track are their authors' own work
 (each theme's `credit.txt`/`OFL.txt` says so - do not remove or thin these out). `default`'s sounds,
 images and music are generated - `tools/make_theme_sounds.py`, `tools/make_theme_images.py`,
-`tools/make_theme_music.py`; `ab2`'s launcher menu icons and on/off switch by `tools/make_ab2_icons.py`.
+`tools/make_theme_music.py`, its frames (`launcher.frames`, `Themes/default/frames/`) by `tools/make_default_frames.py`, the hint band at the foot of `images/launcher_background.png` by `tools/make_default_hintband.py`; `ab2`'s launcher menu icons and on/off switch by `tools/make_ab2_icons.py`.
 Re-run the relevant script and commit its output when you touch what it draws.
 
 A new theme is a new `Themes/<name>/` folder with at least a `theme.json` (everything else falls back to

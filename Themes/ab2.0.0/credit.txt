@@ -1,0 +1,6 @@
+ab2.0.0 - a trial of AutoBleem 2's new look (CONSOLE-14).
+Images: drawn by scripts (vectors and a procedural background); no photographs, no AI
+pictures. Their sources are kept in the design repository, not shipped with the theme.
+Font: Red Hat Text, SIL Open Font License 1.1 (font/OFL.txt), static cuts of the
+variable font. Music: ab.ogg, the same track as the ab2 theme. Sounds and the button
+glyphs come from the default theme.

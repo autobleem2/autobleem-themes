@@ -1,35 +1,46 @@
 {
   "format": 1,
   "music": {
-    "file": "Absolute Terror.ogg",
+    "file": "ab.ogg",
     "loop": true
   },
   "classic": {
     "background": "background.jpg",
     "logo": {
       "file": "ab.png",
-      "x": 520,
-      "y": 0,
-      "w": 240,
-      "h": 180
+      "x": 400,
+      "y": 160,
+      "w": 480,
+      "h": 360
     },
-    "font": {
-      "file": "saira-semicondensed-medium.ttf",
-      "size": 20
-    },
-    "menuLines": 13,
+    "menuLines": 12,
     "menuPanel": {
       "x": 30,
       "y": 10,
       "w": 1220,
-      "h": 580
+      "h": 615,
+      "color": "#1a212b",
+      "alpha": 224
     },
     "statusBar": {
-      "x": 0,
+      "x": 30,
       "y": -670,
-      "w": 1280,
-      "h": 30,
+      "w": 1220,
+      "h": 33,
+      "color": "#1a212b",
+      "alpha": 224,
       "textY": 662
+    },
+    "textColor": "#f0f8fa",
+    "textShadow": true,
+    "keyboardKey": {
+      "color": "#3a4654",
+      "alpha": 215
+    },
+    "labelColor": "#28313d",
+    "freeSpaceText": {
+      "x": 180,
+      "y": 35
     },
     "buttons": {
       "cross": "cross.png",
@@ -39,7 +50,14 @@
       "start": "start.png",
       "select": "select.png",
       "l1": "l1.png",
-      "r1": "r1.png"
+      "r1": "r1.png",
+      "l2": "l2.png",
+      "r2": "r2.png",
+      "check": "on.png",
+      "uncheck": "off.png",
+      "esc": "esc.png",
+      "enter": "enter.png",
+      "tab": "tab.png"
     }
   },
   "launcher": {
@@ -47,49 +65,89 @@
     "footer": "images/launcher_footer.png",
     "playButton": "images/play_button.png",
     "playText": "images/play_text.png",
-    "settingsPanel": "images/settings_panel.png",
     "metaPanel": "images/meta_panel.png",
-    "metaPanelSlides": false,
+    "metaPanelSlides": true,
+    "textShadow": true,
     "arrow": "images/arrow.png",
-    "hintBar": { "x": 540, "y": 630, "w": 730, "h": 56 },
-    "hints": {
-      "cross": "images/hint_cross.png",
-      "circle": "images/hint_circle.png",
-      "triangle": "images/hint_triangle.png"
+    "hintBar": {
+      "x": 348,
+      "y": 638,
+      "w": 920,
+      "h": 78
     },
     "menuIcons": {
       "settings": "images/menu_settings.png",
       "guide": "images/menu_guide.png",
       "memcard": "images/menu_memcard.png",
-      "resume": "images/menu_resume.png"
+      "resume": "images/menu_resume.png",
+      "resumePicture": {
+        "x": 25,
+        "y": 33,
+        "w": 68,
+        "h": 52
+      },
+      "resumePictureMask": "images/resume_mask.png"
     },
-    "memcardManager": {
-      "grid": "images/memcard_grid.png",
-      "pencil": "images/memcard_pencil.png"
-    },
-    "hintBar": {
-      "x": 536,
-      "y": 634,
-      "w": 736,
-      "h": 80
+    "logo": {
+      "file": "images/logo.png",
+      "x": 22,
+      "y": 626,
+      "w": 317,
+      "h": 75
     },
     "spinner": {
       "image": "images/spinner.png",
       "frames": 24,
       "fps": 24
     },
+    "memcardManager": {
+      "grid": "images/memcard_grid.png",
+      "pencil": "images/memcard_pencil.png"
+    },
+    "fonts": {
+      "medium": "font/RedHatText-Medium.ttf",
+      "bold": "font/RedHatText-SemiBold.ttf"
+    },
     "colors": {
-      "text": "#ffffff",
-      "secondary": "#b4c0d0",
-      "hint": "#3b4350",
-      "selection": "#2fd3a4",
-      "heading": "#dfe6ee",
-      "edge": "#d8dde3",
-      "selectionBand": "#eef2f6",
+      "text": "#f0f8fa",
+      "secondary": "#96a4b2",
+      "hint": "#c8d2dc",
+      "selection": "#ff46aa",
+      "heading": "#36d9e0",
+      "edge": "#36d9e0",
+      "selectionBand": "#ff46aa",
       "disabled": {
-        "color": "#0c1e3c",
+        "color": "#28303a",
         "alpha": 120
       }
+    },
+    "iconHalo": false,
+    "icons": {
+      "storeInstalled": "images/store_installed.png",
+      "players": "icons/players.png",
+      "disc": "icons/disc.png",
+      "usb": "icons/usb.png",
+      "internal": "icons/internal.png",
+      "hd": "icons/hd.png",
+      "sd": "icons/sd.png",
+      "lock": "icons/lock.png",
+      "unlock": "icons/unlock.png",
+      "favorite": "icons/favorite.png",
+      "retroarch": "icons/retroarch.png",
+      "lightgun": "icons/lightgun.png",
+      "lightgun2": "icons/lightgun2.png",
+      "dpadUp": "icons/dpad_up.png",
+      "dpadDown": "icons/dpad_down.png",
+      "dpadLeft": "icons/dpad_left.png",
+      "dpadRight": "icons/dpad_right.png",
+      "tabPlayStation": "icons/tab_playstation.png",
+      "tabRetroArch": "icons/tab_retroarch.png",
+      "tabApps": "icons/tab_apps.png",
+      "extension": "icons/extension.png",
+      "battery": "icons/battery.png",
+      "play": "icons/play.png",
+      "switchOn": "icons/switch_on.png",
+      "switchOff": "icons/switch_off.png"
     },
     "frames": {
       "panel": {
@@ -146,6 +204,11 @@
         "slice": 20,
         "bleed": 8
       },
+      "hintBar": {
+        "image": "frames/hint_bar.png",
+        "slice": 28,
+        "bleed": 8
+      },
       "chip": {
         "image": "frames/chip.png",
         "slice": 10,
@@ -177,41 +240,22 @@
         "image": "frames/band.png",
         "slice": 24
       },
+      "coverGlow": {
+        "image": "frames/cover_glow.png",
+        "slice": 64,
+        "bleed": 48,
+        "fill": false
+      },
       "plate": {
         "image": "frames/plate.png",
         "slice": 16,
         "bleed": 2
       },
-      "coverGlow": {
-        "image": "frames/cover_glow.png",
-        "slice": 64,
-        "bleed": 48,
-        "fill": false,
-        "tint": "selection"
+      "play": {
+        "image": "frames/play.png",
+        "slice": 32,
+        "bleed": 8
       }
-    },
-    "icons": {
-      "players": "icons/players.png",
-      "disc": "icons/disc.png",
-      "usb": "icons/usb.png",
-      "internal": "icons/internal.png",
-      "hd": "icons/hd.png",
-      "sd": "icons/sd.png",
-      "lock": "icons/lock.png",
-      "unlock": "icons/unlock.png",
-      "favorite": "icons/favorite.png",
-      "retroarch": "icons/retroarch.png",
-      "lightgun": "icons/lightgun.png",
-      "lightgun2": "icons/lightgun2.png"
-    },
-    "iconHalo": true,
-    "textShadow": true
-  },
-  "sounds": {
-    "cursor": "sounds/cursor.wav",
-    "cancel": "sounds/cancel.wav",
-    "homeUp": "sounds/home_up.wav",
-    "homeDown": "sounds/home_down.wav",
-    "resume": "sounds/resume_new.wav"
+    }
   }
 }
