@@ -257,5 +257,72 @@
         "bleed": 8
       }
     }
+  },
+  "layout4x3": {
+    "images": {
+      "background": "images/launcher_background_4x3.png"
+    },
+    "logo": {
+      "x": 14,
+      "y": 12,
+      "w": 158,
+      "h": 38
+    },
+    "carousel": {
+      "centreX": 196,
+      "centreY": 214,
+      "coverMax": 146,
+      "raise": 58,
+      "shelfY": 60,
+      "shelfH": 76,
+      "sideScale": 0.6
+    },
+    "playButton": {
+      "x": 130,
+      "y": 300,
+      "w": 132,
+      "h": 45
+    },
+    "meta": {
+      "x": 318,
+      "y": 160,
+      "yRaised": 114,
+      "w": 304,
+      "h": 110,
+      "titleSize": 21,
+      "labelSize": 11,
+      "valueSize": 14,
+      "infoSize": 13
+    },
+    "arrow": {
+      "x": 186,
+      "y": 237,
+      "w": 20
+    },
+    "menuRow": {
+      "x": 164,
+      "y": 330,
+      "yOpen": 286,
+      "icon": 65,
+      "gap": 24
+    },
+    "menuCaption": {
+      "x": 196,
+      "y": 372,
+      "size": 16,
+      "textY": 394,
+      "textSize": 13
+    },
+    "band": {
+      "bottom": 418,
+      "closed": 60,
+      "open": 170
+    },
+    "hintBar": {
+      "x": 8,
+      "y": 418,
+      "w": 624,
+      "h": 58
+    }
   }
 }
