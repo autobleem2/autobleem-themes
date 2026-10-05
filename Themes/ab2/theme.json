@@ -214,7 +214,8 @@
       "favorite": "icons/favorite.png",
       "retroarch": "icons/retroarch.png",
       "lightgun": "icons/lightgun.png",
-      "lightgun2": "icons/lightgun2.png"
+      "lightgun2": "icons/lightgun2.png",
+      "batteryCharging": "icons/battery_charging.png"
     },
     "iconHalo": true,
     "textShadow": true
