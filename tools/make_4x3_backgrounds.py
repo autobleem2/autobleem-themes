@@ -3,8 +3,8 @@ Legacy of 2018, cut from each
 theme's own 16:9 launcher_background.png - nothing new is drawn but what the 4:3 layout moves:
 
   aergb, default   the 800x600 window at (400, 0) of the 1280x720 art (the arc and the hill, clear of the hint
-                   swoosh and the logo at its foot), scaled to 640x480; the AutoBleem logo cut from the 16:9 art
-                   and set again in the top-right corner (the 4:3 hint bar runs the full width at the foot)
+                   swoosh and the logo at its foot), scaled to 640x480 (the 4:3 hint bar runs the full width at
+                   the foot)
   evolution        the art shifted so its circle and cover frame sit on the 4:3 carousel's cover (196, 214 at
                    640x480; the art at 1.5x of the canvas, its own scale), the details box moved and sized to the
                    4:3 meta block (308, 162, 292 x 110 plus a margin); the texture under the old box is copied up
@@ -12,7 +12,11 @@ theme's own 16:9 launcher_background.png - nothing new is drawn but what the 4:3
   ab2              the circuit art's 800x600 window at (400, 0), clear of its logo and band at the foot; its
                    wordmark ("AUTOBLEEM 2 / PS CLASSIC MODIFICATION HUB") cut off the art and set again top-right
   Legacy of 2018   the 960x720 window at (240, 0): the column of PlayStation symbols at the left edge, the cover
-                   beside it rather than on it; no logo (its art has none)
+                   beside it rather than on it, the symbols under the launcher's DEV badge taken out whole
+
+aergb, default, evolution and Legacy of 2018 are cut from their art as it was before the new logo
+(design/logo-ab2/*.orig.png, tools/make_theme_logos.py) and get the AutoBleem 2 logo in their own colours
+(design/logo-ab2/logo-<palette>@2x.png) in ab2.0.0's 4:3 logo box, top-right.
 
 Each also gets a 4:3 hint band (images/launcher_footer_4x3.png, 640 x 66 at the canvas's foot): its own 16:9 band
 fitted to the 4:3 hint bar - these themes' hint colours are made for that band - and evolution, whose logo was in the
@@ -36,9 +40,19 @@ W, H = 640, 480
 
 # aergb / default: the window of the 16:9 art that becomes the 4:3 picture, and the logo in the 16:9 art
 WINDOW = (400, 0, 1200, 600)
-LOGO_BOX = (70, 515, 350, 712)          # the stacked "Auto Bleem" + its small arc + the four symbols
-LOGO_H = 52                             # its height at 640x480, top-right, clear of the side-cover shelf (y 60)
-LOGO_XY = (626, 8)                      # its top-right corner
+LOGO_XY = (626, 8)                      # the top-right corner for ab2's wordmark
+# the AutoBleem 2 logo in the theme's colours (design/logo-ab2, tools/make_theme_logos.py): ab2.0.0's layout4x3 logo
+# box - top-right, clear of the side-cover shelf (y 60)
+LOGO43 = (468, 12, 158)                 # x, y, width
+LOGO_PALETTE = {"aergb": "arc", "default": "arc", "evolution": "evo", "Legacy of 2018": "legacy"}
+ORIG = os.path.join(HERE, "..", "design", "logo-ab2")
+
+
+def source_art(name, kind="background"):
+    """a theme's 16:9 art as it was before the new logo went in (design/logo-ab2/<name>-<kind>.orig.png), else the
+    file itself - the 4:3 cut never shows a 16:9 logo"""
+    o = os.path.join(ORIG, "%s-%s.orig.png" % (name.replace(" ", "-"), kind))
+    return Image.open(o if os.path.exists(o) else os.path.join(THEMES, name, "images", "launcher_%s.png" % kind))
 
 # evolution: the art's cover square centre and details box (1280x720), and where the 4:3 layout wants them
 EVO_SQUARE = (523, 176, 757, 410)
@@ -50,35 +64,13 @@ META = (308, 162, 292, 110)             # layout4x3.meta x, y, w, h
 META_PAD = 6
 
 
-def logo_cut(art):
-    """the logo as RGBA: its white letters, black outline, the small rainbow arc and the symbols, off the blue"""
-    box = art.crop(LOGO_BOX).convert("RGB")
-    hsv = box.convert("HSV")
-    a = Image.new("L", box.size, 0)
-    pa, pr, ph = a.load(), box.load(), hsv.load()
-    for y in range(box.height):
-        for x in range(box.width):
-            r, g, b = pr[x, y]
-            h, s, v = ph[x, y]
-            lum = (r * 3 + g * 6 + b) / 10
-            blue = 120 <= h <= 175 and s > 90             # the background's blues (PIL hue 0-255)
-            if lum > 170 or lum < 34 or (not blue and s > 110 and v > 120):
-                pa[x, y] = 255
-    a = a.filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3))     # close the outline's gaps
-    keep = a.getbbox()
-    out = box.convert("RGBA")
-    out.putalpha(a.filter(ImageFilter.GaussianBlur(0.6)))
-    return out.crop(keep)
-
-
 def arc_theme(name):
-    art = Image.open(os.path.join(THEMES, name, "images", "launcher_background.png")).convert("RGBA")
-    im, box = with_logo(art.crop(WINDOW).resize((W, H), Image.LANCZOS))
+    im, box = with_logo(source_art(name).convert("RGBA").crop(WINDOW).resize((W, H), Image.LANCZOS), name)
     return im, {"logo": box}
 
 
 def evolution():
-    art = Image.open(os.path.join(THEMES, "evolution", "images", "launcher_background.png")).convert("RGB")
+    art = source_art("evolution").convert("RGB")
     # 1. the details box out: the texture under it from the same columns 160 rows down (clear of the box and its shadow) (the maze repeats nothing
     #    a viewer can follow), its edges a few px wider so the frame line goes too
     #    - where the box crosses the circle, the circle's own mirror image from its left half (it is symmetric)
@@ -113,7 +105,7 @@ def evolution():
     d.rectangle(bx, fill=(4, 18, 40, 150))
     d.rectangle(bx, outline=(200, 212, 226, 210), width=3)
     canvas = Image.alpha_composite(canvas.convert("RGBA"), veil)
-    im, box = with_logo(canvas.resize((W, H), Image.LANCZOS))          # its 16:9 logo sits in the footer it loses
+    im, box = with_logo(canvas.resize((W, H), Image.LANCZOS), "evolution")          # its 16:9 logo sits in the footer it loses
     return im, {"details box": tuple(round(v / K) for v in bx), "logo": box}
 
 
@@ -142,17 +134,17 @@ LEGACY_WINDOW = (240, 0, 1200, 720)
 def footer(name):
     out = Image.new("RGBA", (W, FOOT_H), (0, 0, 0, 0))
     if name == "evolution":
-        f = Image.open(os.path.join(THEMES, name, "images", "launcher_footer.png")).convert("RGBA")
+        f = source_art(name, "footer").convert("RGBA")
         out = f.crop((EVO_SLOT_X, 0, f.width, f.height)).resize((W, FOOT_H), Image.LANCZOS)
         return out
     if name == "Legacy of 2018":                        # its 16:9 footer is a plain silver bar: the whole of it
-        f = Image.open(os.path.join(THEMES, name, "images", "launcher_footer.png")).convert("RGBA")
+        f = source_art(name, "footer").convert("RGBA")
         return f.resize((W, FOOT_H), Image.LANCZOS)
     if name == "ab2":
         art = Image.open(os.path.join(THEMES, name, "images", "AB-EvoBack.jpg")).convert("RGBA")
         out.alpha_composite(art.crop(AB2_BAND).resize((W - 8, BAND[3] - BAND[1]), Image.LANCZOS), (8, BAND[1]))
         return out
-    art = Image.open(os.path.join(THEMES, name, "images", "launcher_background.png")).convert("RGBA")
+    art = source_art(name).convert("RGBA")
     poly = BAND_SRC[name]
     x0, y0 = min(p[0] for p in poly), min(p[1] for p in poly)
     x1, y1 = max(p[0] for p in poly), max(p[1] for p in poly)
@@ -174,13 +166,14 @@ def footer(name):
     return out
 
 
-def with_logo(im):
-    """the AutoBleem logo from aergb's 16:9 art, top-right"""
-    logo = logo_cut(Image.open(os.path.join(THEMES, "aergb", "images", "launcher_background.png")))
-    logo = logo.resize((round(logo.width * LOGO_H / logo.height), LOGO_H), Image.LANCZOS)
+def with_logo(im, name):
+    """the AutoBleem 2 logo in the theme's colours, in ab2.0.0's 4:3 logo box"""
+    logo = Image.open(os.path.join(ORIG, "logo-%s@2x.png" % LOGO_PALETTE[name])).convert("RGBA")
+    x, y, w = LOGO43
+    logo = logo.resize((w, round(logo.height * w / logo.width)), Image.LANCZOS)
     im = im.convert("RGBA")
-    im.alpha_composite(logo, (LOGO_XY[0] - logo.width, LOGO_XY[1]))
-    return im.convert("RGB"), (LOGO_XY[0] - logo.width, LOGO_XY[1], LOGO_XY[0], LOGO_XY[1] + LOGO_H)
+    im.alpha_composite(logo, (x, y))
+    return im.convert("RGB"), (x, y, x + w, y + logo.height)
 
 
 def ab2():
@@ -209,7 +202,7 @@ DEV_ZONE = (0, 64, 126, 102)            # the launcher's DEV badge + build id, t
 
 
 def legacy():
-    art = Image.open(os.path.join(THEMES, "Legacy of 2018", "images", "launcher_background.png")).convert("RGB")
+    art = source_art("Legacy of 2018").convert("RGB")
     im = art.crop(LEGACY_WINDOW).resize((W, H), Image.LANCZOS)
     # the plain gradient under the symbols: a smooth (cubic) surface fitted to the symbol-free part of the art, right
     # of the symbols' cascade, then used where the symbols must go
@@ -233,7 +226,7 @@ def legacy():
     gone = ndimage.binary_dilation(gone, iterations=2)
     mask = Image.fromarray((gone * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.5))
     im = Image.composite(plain, im, mask)
-    im, box = with_logo(im)
+    im, box = with_logo(im, "Legacy of 2018")
     return im, {"logo": box, "dev zone": DEV_ZONE}
 
 
