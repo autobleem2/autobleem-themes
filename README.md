@@ -1,7 +1,8 @@
 # autobleem-themes
 
-The UI themes for [AutoBleem](https://github.com/autobleem2/autobleem): `ab2`, `aergb`, `autobleem`,
-`default` and `evolution`, each a folder under `Themes/` with a `theme.json` and the files it names.
+The UI themes for [AutoBleem](https://github.com/autobleem2/autobleem): `ab2.0.0`, `aergb`, `autobleem`,
+`default` and `evolution`, each a folder under `Themes/` with a `theme.json` and the files it names. (The old `ab2`
+folder stays in the repository, but `tools/unshipped_themes.txt` keeps it out of the package.)
 
 ## Installing
 

@@ -1,0 +1,8 @@
+# Theme folders under Themes/ that the themes package (tools/make_themes_package.sh, the release/nightly
+# themes-<version>.tar.gz every appliance and installer stages) leaves out - one folder name per line. A theme
+# folder in this repository does not mean it ships. The launcher's tools/unshipped_themes.txt and the appliance's
+# UNSHIPPED_THEMES (tools/release_assets.sh) are the same list for their own packaging - change all three.
+#
+# ab2: the experimental first theme, out of every package on 2026-10-06 (the owner). The folder - with ab.ogg,
+# the owner's own music - stays here.
+ab2
