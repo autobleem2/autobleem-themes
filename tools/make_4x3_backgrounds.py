@@ -9,7 +9,10 @@ theme's own 16:9 launcher_background.png - nothing new is drawn but what the 4:3
                    4:3 meta block (308, 162, 292 x 110 plus a margin); the texture under the old box is copied up
                    from the rows below it
 
-Writes Themes/<name>/images/launcher_background_4x3.png. With --shots <dir> also a sheet of the three with the 4:3
+Each also gets a 4:3 hint band (images/launcher_footer_4x3.png, 640 x 66 at the canvas's foot): its own 16:9 band
+fitted to the 4:3 hint bar - these themes' hint colours are made for that band - and evolution, whose logo was in the
+footer it no longer shows, the AutoBleem logo top-right like the other two.
+Writes Themes/<name>/images/launcher_background_4x3.png and launcher_footer_4x3.png. With --shots <dir> also a sheet of the three with the 4:3
 layout's boxes drawn on (cover, play, meta, menu row, hint bar).
 Run: python tools/make_4x3_backgrounds.py [--shots <dir>]
 """
@@ -63,11 +66,8 @@ def logo_cut(art):
 
 def arc_theme(name):
     art = Image.open(os.path.join(THEMES, name, "images", "launcher_background.png")).convert("RGBA")
-    im = art.crop(WINDOW).resize((W, H), Image.LANCZOS)
-    logo = logo_cut(Image.open(os.path.join(THEMES, "aergb", "images", "launcher_background.png")))
-    logo = logo.resize((round(logo.width * LOGO_H / logo.height), LOGO_H), Image.LANCZOS)
-    im.alpha_composite(logo, (LOGO_XY[0] - logo.width, LOGO_XY[1]))
-    return im.convert("RGB"), {"logo": (LOGO_XY[0] - logo.width, LOGO_XY[1], LOGO_XY[0], LOGO_XY[1] + LOGO_H)}
+    im, box = with_logo(art.crop(WINDOW).resize((W, H), Image.LANCZOS))
+    return im, {"logo": box}
 
 
 def evolution():
@@ -106,7 +106,50 @@ def evolution():
     d.rectangle(bx, fill=(4, 18, 40, 150))
     d.rectangle(bx, outline=(200, 212, 226, 210), width=3)
     canvas = Image.alpha_composite(canvas.convert("RGBA"), veil)
-    return canvas.resize((W, H), Image.LANCZOS).convert("RGB"), {"details box": tuple(round(v / K) for v in bx)}
+    im, box = with_logo(canvas.resize((W, H), Image.LANCZOS))          # its 16:9 logo sits in the footer it loses
+    return im, {"details box": tuple(round(v / K) for v in bx), "logo": box}
+
+
+# the 4:3 hint band (layout4x3.images.footer): the theme's own 16:9 band under the hints, fitted to the 4:3 hint bar
+# (8, 418, 624 x 58) - the hint colours of these themes are made for their band (aergb's and evolution's are dark),
+# so without it the labels sink into the background. The footer picture sits on the canvas's foot, full width.
+FOOT_H = 66                             # the picture: y 414..480
+BAND = (-30, 2, 640, 64)                # the band inside it: its slanted end half off the left edge, so the first hint
+                                        # column stands on the band's flat inside; it runs off the right edge as in 16:9
+BAND_SRC = {                            # the band's parallelogram in the 16:9 art: top-left, top-right, foot-right, foot-left
+    "aergb": ((455, 617), (1280, 617), (1280, 694), (394, 694)),
+    "default": ((412, 612), (1280, 612), (1280, 708), (352, 708)),
+}
+EVO_SLOT_X = 522                        # evolution's footer: the silver bar right of its POWER / logo / OPEN block
+
+
+def footer(name):
+    out = Image.new("RGBA", (W, FOOT_H), (0, 0, 0, 0))
+    if name == "evolution":
+        f = Image.open(os.path.join(THEMES, name, "images", "launcher_footer.png")).convert("RGBA")
+        out = f.crop((EVO_SLOT_X, 0, f.width, f.height)).resize((W, FOOT_H), Image.LANCZOS)
+        return out
+    art = Image.open(os.path.join(THEMES, name, "images", "launcher_background.png")).convert("RGBA")
+    poly = BAND_SRC[name]
+    x0, y0 = min(p[0] for p in poly), min(p[1] for p in poly)
+    x1, y1 = max(p[0] for p in poly), max(p[1] for p in poly)
+    mask = Image.new("L", art.size, 0)
+    ImageDraw.Draw(mask).polygon(poly, fill=255)
+    band = art.crop((x0, y0, x1, y1))
+    band.putalpha(mask.crop((x0, y0, x1, y1)))
+    bw, bh = BAND[2] - BAND[0], BAND[3] - BAND[1]
+    b = band.resize((bw, bh), Image.LANCZOS)
+    out.paste(b, (BAND[0], BAND[1]), b)                 # paste: its left end may start off the picture
+    return out
+
+
+def with_logo(im):
+    """the AutoBleem logo from aergb's 16:9 art, top-right"""
+    logo = logo_cut(Image.open(os.path.join(THEMES, "aergb", "images", "launcher_background.png")))
+    logo = logo.resize((round(logo.width * LOGO_H / logo.height), LOGO_H), Image.LANCZOS)
+    im = im.convert("RGBA")
+    im.alpha_composite(logo, (LOGO_XY[0] - logo.width, LOGO_XY[1]))
+    return im.convert("RGB"), (LOGO_XY[0] - logo.width, LOGO_XY[1], LOGO_XY[0], LOGO_XY[1] + LOGO_H)
 
 
 def layout(name):
@@ -118,6 +161,7 @@ def sheet(results):
     tiles = []
     for name, (im, extra) in results.items():
         t = im.convert("RGBA")
+        t.alpha_composite(footer(name), (0, H - FOOT_H))
         d = ImageDraw.Draw(t)
         c = lay["carousel"]
         m = c["coverMax"] / 2
@@ -141,6 +185,7 @@ def main():
     results = {"aergb": arc_theme("aergb"), "default": arc_theme("default"), "evolution": evolution()}
     for name, (im, extra) in results.items():
         im.save(os.path.join(THEMES, name, "images", "launcher_background_4x3.png"), optimize=True)
+        footer(name).save(os.path.join(THEMES, name, "images", "launcher_footer_4x3.png"), optimize=True)
         print(name, extra)
     if SHOTS:
         sheet(results)

@@ -216,7 +216,8 @@
   },
   "layout4x3": {
     "images": {
-      "background": "images/launcher_background_4x3.png"
+      "background": "images/launcher_background_4x3.png",
+      "footer": "images/launcher_footer_4x3.png"
     },
     "carousel": {
       "centreX": 196,
