@@ -1,4 +1,5 @@
-"""The 4:3 launcher backgrounds (layout4x3.images.background, 640x480) of aergb, default and evolution, cut from each
+"""The 4:3 launcher backgrounds (layout4x3.images.background, 640x480) of aergb, default, evolution, ab2 and
+Legacy of 2018, cut from each
 theme's own 16:9 launcher_background.png - nothing new is drawn but what the 4:3 layout moves:
 
   aergb, default   the 800x600 window at (400, 0) of the 1280x720 art (the arc and the hill, clear of the hint
@@ -8,6 +9,10 @@ theme's own 16:9 launcher_background.png - nothing new is drawn but what the 4:3
                    640x480; the art at 1.5x of the canvas, its own scale), the details box moved and sized to the
                    4:3 meta block (308, 162, 292 x 110 plus a margin); the texture under the old box is copied up
                    from the rows below it
+  ab2              the circuit art's 800x600 window at (400, 0), clear of its logo and band at the foot; its
+                   wordmark ("AUTOBLEEM 2 / PS CLASSIC MODIFICATION HUB") cut off the art and set again top-right
+  Legacy of 2018   the 960x720 window at (240, 0): the column of PlayStation symbols at the left edge, the cover
+                   beside it rather than on it; no logo (its art has none)
 
 Each also gets a 4:3 hint band (images/launcher_footer_4x3.png, 640 x 66 at the canvas's foot): its own 16:9 band
 fitted to the 4:3 hint bar - these themes' hint colours are made for that band - and evolution, whose logo was in the
@@ -126,6 +131,10 @@ BAND_ROWS = {
     "aergb": (((617, 627), 3), ((627, 639), 4), ((639, 679), 50), ((679, 694), 5)),
 }
 EVO_SLOT_X = 522                        # evolution's footer: the silver bar right of its POWER / logo / OPEN block
+AB2_BAND = (462, 621, 1280, 695)        # ab2's cyan hint band in its 16:9 art (a plain rectangle)
+AB2_WORDMARK = (24, 600, 440, 700)      # its "AUTOBLEEM 2" + tagline, under the emblem
+AB2_WORDMARK_H = 30
+LEGACY_WINDOW = (240, 0, 1200, 720)
 
 
 def footer(name):
@@ -133,6 +142,13 @@ def footer(name):
     if name == "evolution":
         f = Image.open(os.path.join(THEMES, name, "images", "launcher_footer.png")).convert("RGBA")
         out = f.crop((EVO_SLOT_X, 0, f.width, f.height)).resize((W, FOOT_H), Image.LANCZOS)
+        return out
+    if name == "Legacy of 2018":                        # its 16:9 footer is a plain silver bar: the whole of it
+        f = Image.open(os.path.join(THEMES, name, "images", "launcher_footer.png")).convert("RGBA")
+        return f.resize((W, FOOT_H), Image.LANCZOS)
+    if name == "ab2":
+        art = Image.open(os.path.join(THEMES, name, "images", "AB-EvoBack.jpg")).convert("RGBA")
+        out.alpha_composite(art.crop(AB2_BAND).resize((W - 8, BAND[3] - BAND[1]), Image.LANCZOS), (8, BAND[1]))
         return out
     art = Image.open(os.path.join(THEMES, name, "images", "launcher_background.png")).convert("RGBA")
     poly = BAND_SRC[name]
@@ -165,6 +181,28 @@ def with_logo(im):
     return im.convert("RGB"), (LOGO_XY[0] - logo.width, LOGO_XY[1], LOGO_XY[0], LOGO_XY[1] + LOGO_H)
 
 
+def ab2():
+    art = Image.open(os.path.join(THEMES, "ab2", "images", "AB-EvoBack.jpg")).convert("RGBA")
+    im = art.crop(WINDOW).resize((W, H), Image.LANCZOS)
+    wm = art.crop(AB2_WORDMARK)
+    # its alpha: the bright letters off the dark art, softened at the edge
+    lum = wm.convert("L").point(lambda v: max(0, min(255, (v - 70) * 3)))
+    wm.putalpha(lum.filter(ImageFilter.GaussianBlur(0.5)))
+    wm = wm.crop(lum.point(lambda v: 255 if v > 60 else 0).getbbox())
+    wm = wm.resize((round(wm.width * AB2_WORDMARK_H / wm.height), AB2_WORDMARK_H), Image.LANCZOS)
+    x, y = LOGO_XY[0] - wm.width, LOGO_XY[1] + 4
+    shade = Image.new("RGBA", im.size, (0, 0, 0, 0))   # a soft dark plate so it reads on the busy circuit
+    ImageDraw.Draw(shade).rounded_rectangle((x - 8, y - 6, x + wm.width + 8, y + wm.height + 6), 8, fill=(0, 10, 30, 150))
+    im = Image.alpha_composite(im, shade.filter(ImageFilter.GaussianBlur(4)))
+    im.alpha_composite(wm, (x, y))
+    return im.convert("RGB"), {"wordmark": (x, y, x + wm.width, y + wm.height)}
+
+
+def legacy():
+    art = Image.open(os.path.join(THEMES, "Legacy of 2018", "images", "launcher_background.png")).convert("RGB")
+    return art.crop(LEGACY_WINDOW).resize((W, H), Image.LANCZOS), {}
+
+
 def layout(name):
     return json.load(open(os.path.join(THEMES, "ab2.0.0", "theme.json"), encoding="utf-8"))["layout4x3"]
 
@@ -195,7 +233,8 @@ def sheet(results):
 
 
 def main():
-    results = {"aergb": arc_theme("aergb"), "default": arc_theme("default"), "evolution": evolution()}
+    results = {"aergb": arc_theme("aergb"), "default": arc_theme("default"), "evolution": evolution(), "ab2": ab2(),
+               "Legacy of 2018": legacy()}
     for name, (im, extra) in results.items():
         im.save(os.path.join(THEMES, name, "images", "launcher_background_4x3.png"), optimize=True)
         footer(name).save(os.path.join(THEMES, name, "images", "launcher_footer_4x3.png"), optimize=True)

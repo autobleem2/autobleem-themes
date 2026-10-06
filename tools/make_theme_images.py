@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from make_ab2_icons import gamepad, gear, memcard  # noqa: E402
 
 REPO = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-THEMES = os.path.join(REPO, 'payload', 'Themes')
+THEMES = os.path.join(REPO, 'Themes')
 
 K = 4  # supersampling
 WHITE = (245, 245, 245)
@@ -202,7 +202,7 @@ STYLES = {
     'default': Style(),
     'aergb': Style(),
     'evolution': Style(),
-    'autobleem': Style(),
+    'Legacy of 2018': Style(),
     'ab2': Style(glyph=(235, 245, 255), glow=(70, 225, 255)),
 }
 
@@ -213,7 +213,7 @@ PLANS = {
     'default': COMMON + MENU + EMPTY + ['memcard_pencil'],
     'aergb': COMMON + MENU + EMPTY + ['memcard_pencil'],
     'evolution': COMMON + MENU + ['memcard_pencil', 'play_button'],
-    'autobleem': COMMON + ['memcard_pencil', 'menu_resume', 'settings_panel'],
+    'Legacy of 2018': COMMON + ['memcard_pencil', 'menu_resume', 'settings_panel'],
     'ab2': COMMON + EMPTY,
 }
 
