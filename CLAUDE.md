@@ -24,7 +24,7 @@ Windows editor turn them back to CRLF). Keep every theme's own licence facts wit
 OFL (its own `OFL.txt`/`LICENSE`), `ab2`'s `ab.ogg` and `evolution`'s track are their authors' own work
 (each theme's `credit.txt`/`OFL.txt` says so - do not remove or thin these out). `default`'s sounds,
 images and music are generated - `tools/make_theme_sounds.py`, `tools/make_theme_images.py`,
-`tools/make_theme_music.py`, its frames (`launcher.frames`, `Themes/default/frames/`) by `tools/make_default_frames.py`, the hint band at the foot of `images/launcher_background.png` by `tools/make_default_hintband.py`; `ab2`'s launcher menu icons and on/off switch by `tools/make_ab2_icons.py`.
+`tools/make_theme_music.py`, its frames (`launcher.frames`, `Themes/default/frames/`) by `tools/make_default_frames.py`, the hint band at the foot of `images/launcher_background.png` by `tools/make_default_hintband.py`; `ab2`'s launcher menu icons and on/off switch by `tools/make_ab2_icons.py`; the 4:3 launcher backgrounds of `aergb`, `default` and `evolution` (`images/launcher_background_4x3.png`, their `layout4x3`) by `tools/make_4x3_backgrounds.py`, from each theme's own 16:9 background.
 Re-run the relevant script and commit its output when you touch what it draws.
 
 A new theme is a new `Themes/<name>/` folder with at least a `theme.json` (everything else falls back to
