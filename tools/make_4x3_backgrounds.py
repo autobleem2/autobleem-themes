@@ -120,6 +120,11 @@ BAND_SRC = {                            # the band's parallelogram in the 16:9 a
     "aergb": ((455, 617), (1280, 617), (1280, 694), (394, 694)),
     "default": ((412, 612), (1280, 612), (1280, 708), (352, 708)),
 }
+# aergb's strip is mostly frame (black 8, rainbow 12, silver 40, rainbow 10 + shadow of 77 rows): scaled as a whole its
+# silver inside is too low for the two hint lines (the owner, 2026-10-06: "wyzszy pasek") - rows (16:9 art) -> px
+BAND_ROWS = {
+    "aergb": (((617, 627), 3), ((627, 639), 4), ((639, 679), 50), ((679, 694), 5)),
+}
 EVO_SLOT_X = 522                        # evolution's footer: the silver bar right of its POWER / logo / OPEN block
 
 
@@ -138,7 +143,15 @@ def footer(name):
     band = art.crop((x0, y0, x1, y1))
     band.putalpha(mask.crop((x0, y0, x1, y1)))
     bw, bh = BAND[2] - BAND[0], BAND[3] - BAND[1]
-    b = band.resize((bw, bh), Image.LANCZOS)
+    if name in BAND_ROWS:                               # rebuilt row band by row band: a thinner frame, a taller inside
+        b = Image.new("RGBA", (bw, bh), (0, 0, 0, 0))
+        y = 0
+        for (r0, r1), h in BAND_ROWS[name]:
+            b.alpha_composite(band.crop((0, r0 - y0, band.width, r1 - y0)).resize((bw, h), Image.LANCZOS), (0, y))
+            y += h
+        assert y == bh
+    else:
+        b = band.resize((bw, bh), Image.LANCZOS)
     out.paste(b, (BAND[0], BAND[1]), b)                 # paste: its left end may start off the picture
     return out
 
