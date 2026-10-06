@@ -137,7 +137,7 @@ def bar(alpha):
 SL = lambda l, t: {"left": l, "top": t, "right": l, "bottom": t}
 SHEET_GREY = 62   # x the edge role = the sheet: default #82b7ed -> #1f2c3a (a dark navy)
 FRAMES = {
-    "panel": (sheet(96, 96, 12, 6, 200, 150, 150), {"slice": 36, "bleed": 12, "tint": "edge"}),
+    "panel": (sheet(96, 96, 12, 6, 245, 150, 150), {"slice": 36, "bleed": 12, "tint": "edge"}),
     "selection": (selection, {"slice": SL(12, 10), "bleed": 4, "tint": "selectionBand"}),
     "heading": (heading, {"slice": SL(12, 6), "tint": "edge"}),
     "key": (plate(48, 48, 4, 5, 255, 30, 120), {"slice": 16, "bleed": 4, "tint": "edge"}),

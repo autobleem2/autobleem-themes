@@ -1,7 +1,7 @@
 # autobleem-themes - developer context
 
 The source of AutoBleem's UI themes (autobleem-main's `docs/decisions.md`: "Themes and samples have their
-own source repositories"). Five themes ship today: `ab2`, `aergb`, `autobleem`, `default`, `evolution`.
+own source repositories"). Five themes ship today: `ab2`, `aergb`, `Legacy of 2018` (until 2026-10-06 `autobleem`), `default`, `evolution`.
 
 ## Layout
 
@@ -24,7 +24,7 @@ Windows editor turn them back to CRLF). Keep every theme's own licence facts wit
 OFL (its own `OFL.txt`/`LICENSE`), `ab2`'s `ab.ogg` and `evolution`'s track are their authors' own work
 (each theme's `credit.txt`/`OFL.txt` says so - do not remove or thin these out). `default`'s sounds,
 images and music are generated - `tools/make_theme_sounds.py`, `tools/make_theme_images.py`,
-`tools/make_theme_music.py`, its frames (`launcher.frames`, `Themes/default/frames/`) by `tools/make_default_frames.py`, the hint band at the foot of `images/launcher_background.png` by `tools/make_default_hintband.py`; `ab2`'s launcher menu icons and on/off switch by `tools/make_ab2_icons.py`.
+`tools/make_theme_music.py`, its frames (`launcher.frames`, `Themes/default/frames/`) by `tools/make_default_frames.py`, the hint band at the foot of `images/launcher_background.png` by `tools/make_default_hintband.py`; `ab2`'s launcher menu icons and on/off switch by `tools/make_ab2_icons.py`; the 4:3 launcher backgrounds and hint bands of `aergb`, `default`, `evolution`, `ab2` and `Legacy of 2018` (`images/launcher_background_4x3.png`, `images/launcher_footer_4x3.png`) by `tools/make_4x3_backgrounds.py`, from each theme's own 16:9 background (their `layout4x3` blocks are written by hand, ab2.0.0's positions); the AutoBleem 2 logo in the 16:9 art of `aergb`, `default`, `evolution` (its footer) and `Legacy of 2018` by `tools/make_theme_logos.py`, from `design/logo-ab2/` (the art before the logo, `*.orig.png`, and the logo in each theme's colours, `logo-*@2x.png`, which autobleem-design's `make_logo_theme_colours.py` writes) - run it before `make_4x3_backgrounds.py`.
 Re-run the relevant script and commit its output when you touch what it draws.
 
 A new theme is a new `Themes/<name>/` folder with at least a `theme.json` (everything else falls back to

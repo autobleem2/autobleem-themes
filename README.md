@@ -1,6 +1,6 @@
 # autobleem-themes
 
-The UI themes for [AutoBleem](https://github.com/autobleem2/autobleem): `ab2`, `aergb`, `autobleem`,
+The UI themes for [AutoBleem](https://github.com/autobleem2/autobleem): `ab2`, `aergb`, `Legacy of 2018`,
 `default` and `evolution`, each a folder under `Themes/` with a `theme.json` and the files it names.
 
 ## Installing

@@ -99,7 +99,7 @@
     },
     "colors": {
       "text": "#ffffff",
-      "secondary": "#646464",
+      "secondary": "#a9b8cc",
       "row": "#b8c8dc",
       "rowSelected": "text",
       "heading": "edge",
@@ -134,5 +134,69 @@
     "homeUp": "sounds/home_up.wav",
     "homeDown": "sounds/home_down.wav",
     "resume": "sounds/resume_new.wav"
+  },
+  "layout4x3": {
+    "images": {
+      "background": "images/launcher_background_4x3.png",
+      "footer": "images/launcher_footer_4x3.png"
+    },
+    "carousel": {
+      "centreX": 196,
+      "centreY": 214,
+      "coverMax": 146,
+      "raise": 58,
+      "shelfY": 60,
+      "shelfH": 76,
+      "sideScale": 0.6,
+      "sideCovers": 19
+    },
+    "playButton": {
+      "x": 130,
+      "y": 300,
+      "w": 132,
+      "h": 45
+    },
+    "meta": {
+      "x": 308,
+      "y": 162,
+      "yRaised": 162,
+      "w": 292,
+      "h": 110,
+      "titleSize": 21,
+      "labelSize": 11,
+      "valueSize": 14,
+      "infoSize": 13
+    },
+    "arrow": {
+      "x": 186,
+      "y": 237,
+      "w": 20
+    },
+    "menuRow": {
+      "x": 164,
+      "y": 330,
+      "yOpen": 286,
+      "icon": 65,
+      "gap": 24
+    },
+    "menuCaption": {
+      "x": 196,
+      "y": 364,
+      "size": 18,
+      "textY": 392,
+      "textSize": 15
+    },
+    "band": {
+      "bottom": 418,
+      "closed": 60,
+      "open": 170
+    },
+    "hintBar": {
+      "x": 8,
+      "y": 418,
+      "w": 624,
+      "h": 58,
+      "scale": 0.75
+    }
   }
 }
