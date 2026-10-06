@@ -99,7 +99,7 @@
     },
     "colors": {
       "text": "#ffffff",
-      "secondary": "#646464",
+      "secondary": "#a9b8cc",
       "row": "#b8c8dc",
       "rowSelected": "text",
       "heading": "edge",

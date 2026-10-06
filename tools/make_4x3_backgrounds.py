@@ -25,6 +25,8 @@ import json
 import os
 import sys
 
+import numpy as np
+from scipy import ndimage
 from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -195,12 +197,44 @@ def ab2():
     ImageDraw.Draw(shade).rounded_rectangle((x - 8, y - 6, x + wm.width + 8, y + wm.height + 6), 8, fill=(0, 10, 30, 150))
     im = Image.alpha_composite(im, shade.filter(ImageFilter.GaussianBlur(4)))
     im.alpha_composite(wm, (x, y))
-    return im.convert("RGB"), {"wordmark": (x, y, x + wm.width, y + wm.height)}
+    # the game details on the busy circuit: a soft dark plate behind the meta box
+    mx, my, mw, mh = META
+    shade = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(shade).rounded_rectangle((mx - 12, my - 8, mx + mw + 12, my + mh + 8), 12, fill=(0, 8, 24, 175))
+    im = Image.alpha_composite(im, shade.filter(ImageFilter.GaussianBlur(8)))
+    return im.convert("RGB"), {"wordmark": (x, y, x + wm.width, y + wm.height), "meta plate": META}
+
+
+DEV_ZONE = (0, 64, 126, 102)            # the launcher's DEV badge + build id, top-left at 640x480 - kept clear of symbols
 
 
 def legacy():
     art = Image.open(os.path.join(THEMES, "Legacy of 2018", "images", "launcher_background.png")).convert("RGB")
-    return art.crop(LEGACY_WINDOW).resize((W, H), Image.LANCZOS), {}
+    im = art.crop(LEGACY_WINDOW).resize((W, H), Image.LANCZOS)
+    # the plain gradient under the symbols: a smooth (cubic) surface fitted to the symbol-free part of the art, right
+    # of the symbols' cascade, then used where the symbols must go
+    a = np.asarray(im, dtype=np.float64)
+    yy, xx = np.mgrid[0:H, 0:W]
+    u, v = xx / W, yy / H
+    terms = [u ** i * v ** j for i in range(4) for j in range(4 - i)]
+    free = xx > 200                                   # the cascade ends at canvas x ~190
+    A = np.stack([t[free] for t in terms], 1)
+    plain = np.zeros_like(a)
+    for c in range(3):
+        coef = np.linalg.lstsq(A, a[..., c][free], rcond=None)[0]
+        plain[..., c] = sum(k * t for k, t in zip(coef, terms))
+    plain = Image.fromarray(np.clip(plain, 0, 255).round().astype(np.uint8))
+    # every symbol that reaches into the zone goes whole (no half-faded symbols): the symbols are the pixels off the
+    # plain gradient, each one a connected blob
+    sym = np.abs(a - np.asarray(plain, dtype=np.float64)).max(2) > 12
+    blobs, _ = ndimage.label(sym, structure=np.ones((3, 3)))
+    x0, y0, x1, y1 = DEV_ZONE
+    gone = np.isin(blobs, np.unique(blobs[y0:y1, x0:x1])[1:])
+    gone = ndimage.binary_dilation(gone, iterations=2)
+    mask = Image.fromarray((gone * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.5))
+    im = Image.composite(plain, im, mask)
+    im, box = with_logo(im)
+    return im, {"logo": box, "dev zone": DEV_ZONE}
 
 
 def layout(name):
