@@ -37,11 +37,16 @@ jobs:
           grep '^AB_VERSION=' "$GITHUB_ENV" | tail -1 | sed 's/^AB_VERSION=/version=/' >> "$GITHUB_OUTPUT"
       - name: Package
         run: tools/make_themes_package.sh
-      - name: Verify the archive matches Themes/ (name for name, byte for byte)
+      - name: Verify the archive matches Themes/ (name for name, byte for byte), minus the unshipped folders
         run: |
           mkdir -p /tmp/check
           tar -xzf dist/themes-*.tar.gz -C /tmp/check
-          diff -rq Themes /tmp/check/Themes
+          skip=()
+          while IFS= read -r name; do
+            skip+=(-x "$name")
+            if [ -e "/tmp/check/Themes/$name" ]; then echo "::error::$name is in the package"; exit 1; fi
+          done < <(tools/make_themes_package.sh --unshipped)
+          diff -rq "${skip[@]}" Themes /tmp/check/Themes
       - uses: actions/upload-artifact@v7
         with:
           name: themes-package

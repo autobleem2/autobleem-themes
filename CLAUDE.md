@@ -1,7 +1,11 @@
 # autobleem-themes - developer context
 
 The source of AutoBleem's UI themes (autobleem-main's `docs/decisions.md`: "Themes and samples have their
-own source repositories"). Five themes ship today: `ab2`, `aergb`, `Legacy of 2018` (until 2026-10-06 `autobleem`), `default`, `evolution`.
+own source repositories"). Five themes ship today: `ab2.0.0`, `aergb`, `Legacy of 2018` (until 2026-10-06 `autobleem`),
+`default`, `evolution`. The `ab2` folder stays here (with `ab.ogg`, the owner's own music) but ships in no package
+since 2026-10-06: the folders listed in `tools/unshipped_themes.txt` are left out of the themes package
+(`tools/make_themes_package.sh`; the launcher's `tools/unshipped_themes.txt` and the appliance's `UNSHIPPED_THEMES`
+are the same list - change all three).
 
 ## Layout
 
