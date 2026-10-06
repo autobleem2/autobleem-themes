@@ -309,10 +309,10 @@
     },
     "menuCaption": {
       "x": 196,
-      "y": 372,
-      "size": 16,
-      "textY": 394,
-      "textSize": 13
+      "y": 364,
+      "size": 18,
+      "textY": 392,
+      "textSize": 15
     },
     "band": {
       "bottom": 418,
