@@ -203,6 +203,8 @@
       }
     },
     "icons": {
+      "discDrive": "icons/disc_drive.png",
+      "audioCdCase": "images/audio_cd_case.png",
       "players": "icons/players.png",
       "disc": "icons/disc.png",
       "usb": "icons/usb.png",

@@ -129,6 +129,8 @@
       "storeInstalled": "images/store_installed.png",
       "players": "icons/players.png",
       "disc": "icons/disc.png",
+      "discDrive": "icons/disc_drive.png",
+      "audioCdCase": "images/audio_cd_case.png",
       "usb": "icons/usb.png",
       "internal": "icons/internal.png",
       "hd": "icons/hd.png",

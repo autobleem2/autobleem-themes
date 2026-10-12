@@ -91,6 +91,8 @@
       "resume": "images/menu_resume.png"
     },
     "icons": {
+      "discDrive": "icons/disc_drive.png",
+      "audioCdCase": "images/audio_cd_case.png",
       "players": "icons/players.png"
     },
     "memcardManager": {
