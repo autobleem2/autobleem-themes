@@ -43,7 +43,6 @@
     }
   },
   "launcher": {
-    "audioCdCase": "images/audio_cd_case.png",
     "background": "images/launcher_background.png",
     "footer": "images/launcher_footer.png",
     "playButton": "images/play_button.png",
@@ -192,6 +191,7 @@
     },
     "icons": {
       "discDrive": "icons/disc_drive.png",
+      "audioCdCase": "images/audio_cd_case.png",
       "players": "icons/players.png",
       "disc": "icons/disc.png",
       "usb": "icons/usb.png",
